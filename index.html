@@ -1,14 +1,44 @@
-<html>
+<!DOCTYPE html>
 <head>
   <div style="text-align: center;">
-    <canvas id="lienzo" height="600" width="600" style="border: 1px solid;"></canvas>
+    <h1>Práctica. Estrategia de búsqueda.</h1>
   </div>
-<script src="main.js"></script>
+
+
+  
+<div style="text-align: center;">
+  <button id="start" onclick="updateParameters(); start()">START</button>
+</div>
+  <div style="text-align: center;">
+    <div>
+      <p> Filas:
+        <input type="number" id="filas" value="10" min="1" max="100">
+      </p>
+    </div>
+    <div>
+      <p> Columnas:
+        <input type="number" id="columnas" value="10" min="1" max="100">
+      </p>
+    </div>
+    <div>
+      <p> Obstáculos:
+        <input type="number" id="obstaculos" value="20" min="1" max="100">
+      </p>
+    </div>
+  </div>
+
+  <br>
+
+  <div style="text-align: center;">
+    <canvas id="canvas" height="700" width="700" style="border: 2px solid;"></canvas>
+  </div>
+  <script src="obstacle.js"></script>
+  <script src="grid.js"></script>
+  <script src="main.js"></script>
+
 </head>
 
-<body onload="grid(20,20)">
-
-
+<body onload="updateParameters(); start()" style =" background: linear-gradient(#967029, #cac0ac) fixed;">
 
 </body>
 </html>
