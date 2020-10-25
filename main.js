@@ -4,6 +4,7 @@
  * Variables globales
  */
 let canvas = document.getElementById("canvas");
+canvas.addEventListener('mousedown', toggleObstacle)
 let ctx = canvas.getContext("2d");
 let obstaclesMatrix = []; // Matriz de obstáculos tanto activos como los que no
 let grid = new Grid(
@@ -11,6 +12,17 @@ let grid = new Grid(
   document.getElementById("columnas").value,
   document.getElementById("obstaculos").value
 );
+
+/**
+ * @description Función que borra o añade un nuevo obstáculo en la cuadrícula.
+ * @param {object} event Objecto que regista la información del evento.
+ */
+function toggleObstacle(event) {
+  let x = Math.floor(event.offsetX / grid.colLength);
+  let y = Math.floor(event.offsetY / grid.rowLength);
+  grid.toggleObstacle(x,y);
+  grid.obstacles[x][y].draw();
+}
 
 /**
  * @description Función que sirve para actualizar los parámetros a utilizar
@@ -31,8 +43,8 @@ function updateParameters() {
  */
 function addRandomObstacles() {
   for (let i = 0; i < grid.nObs; i++) {
-    let randx = Math.floor(Math.random() * grid.rows);
-    let randy = Math.floor(Math.random() * grid.cols);
+    let randx = Math.floor(Math.random() * grid.cols);
+    let randy = Math.floor(Math.random() * grid.rows);
     if (grid.obstacles[randx][randy].active) {
       i--;
     } else {
@@ -49,6 +61,7 @@ function addRandomObstacles() {
 function start() {
   ctx.clearRect(0, 0, canvas.clientHeight, canvas.clientWidth);
   updateParameters();
+  grid.createMatrix();
   addRandomObstacles();
   grid.draw();
 }

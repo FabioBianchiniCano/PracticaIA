@@ -19,10 +19,10 @@ class Obstacle {
    * @description Función que pinta el obstáculo en el canvas.
    */
   draw() {
+    let yLength = canvas.height / grid.rows;
+    let xLength = canvas.width / grid.cols;
+    ctx.beginPath();
     if (this.active) {
-      let yLength = canvas.height / grid.rows;
-      let xLength = canvas.width / grid.cols;
-      ctx.beginPath();
       ctx.fillStyle = this.color;
       ctx.fillRect(
         this.x * xLength,
@@ -30,6 +30,12 @@ class Obstacle {
         xLength,
         yLength
       );
+    } else {
+      ctx.clearRect(
+        this.x * xLength + 1,
+        this.y * yLength + 1,
+        xLength - 2,
+        yLength - 2)
     }
     ctx.fillStyle = "black";
   }
