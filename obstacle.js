@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
 class Obstacle {
-  constructor(x, y, active = true, color = 'black') {
+  constructor(x, y, active = true, color = "black") {
     this.x = x;
     this.y = y;
     this.active = active;
@@ -10,12 +10,17 @@ class Obstacle {
 
   draw() {
     if (this.active) {
-      let subdivision = canvas.clientHeight / rows;
+      let yLength = canvas.height / rows;
+      let xLength = canvas.width / cols;
       ctx.beginPath();
       ctx.fillStyle = this.color;
-      ctx.fillRect(this.x * subdivision, this.y * subdivision, subdivision, subdivision);
-      
+      ctx.fillRect(
+        this.x * xLength,
+        this.y * yLength,
+        xLength,
+        yLength
+      );
     }
-    ctx.strokeStyle = 'black';
+    ctx.fillStyle = "black";
   }
 }
