@@ -1,45 +1,54 @@
 "use strict";
 
+/**
+ * Variables globales
+ */
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
-let rows;
-let cols;
-let nObs;
-let obstaclesMatrix = [];
+let obstaclesMatrix = []; // Matriz de obstáculos tanto activos como los que no
+let grid = new Grid(
+  document.getElementById("filas").value,
+  document.getElementById("columnas").value,
+  document.getElementById("obstaculos").value
+);
 
+/**
+ * @description Función que sirve para actualizar los parámetros a utilizar
+ * por la cuadrícula.
+ */
 function updateParameters() {
-  rows = document.getElementById("filas").value;
-  cols = document.getElementById("columnas").value;
-  nObs = document.getElementById("obstaculos").value;
+  grid.updateParameters(
+    document.getElementById("filas").value,
+    document.getElementById("columnas").value,
+    document.getElementById("obstaculos").value
+  );
+  grid.createMatrix();
 }
 
-function createObstacles() {
-  obstaclesMatrix = [];
-  for (let i = 0; i < rows; i++) {
-    obstaclesMatrix.push([]);
-    for (let j = 0; j < cols; j++) {
-      obstaclesMatrix[i].push(new Obstacle(i, j, false));
-    }
-  }
-}
-
-function randomObstacles() {
-  for (let i = 0; i < nObs; i++) {
-    let randx = Math.floor(Math.random() * rows);
-    let randy = Math.floor(Math.random() * cols);
-    if (obstaclesMatrix[randx][randy].active) {
+/**
+ * @description Función que añade de manera aleatoria obstáculos a lo largo de
+ *              toda la cuadrícula.
+ */
+function addRandomObstacles() {
+  for (let i = 0; i < grid.nObs; i++) {
+    let randx = Math.floor(Math.random() * grid.rows);
+    let randy = Math.floor(Math.random() * grid.cols);
+    if (grid.obstacles[randx][randy].active) {
       i--;
     } else {
-      obstaclesMatrix[randx][randy].active = true;
+      grid.obstacles[randx][randy].active = true;
     }
   }
 }
 
+
+/**
+ * @description Función que se ejecuta al cargar la página y al darle
+ *              al botón de start.
+ */
 function start() {
   ctx.clearRect(0, 0, canvas.clientHeight, canvas.clientWidth);
   updateParameters();
-  createObstacles();
-  randomObstacles();
-  let grid = new Grid(rows, cols, obstaclesMatrix);
+  addRandomObstacles();
   grid.draw();
 }
