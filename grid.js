@@ -52,7 +52,6 @@ class Grid {
       for (let j = 0; j < this.rows; j++) 
         this.obstacles[i][j].draw();
 
-
     for (let itx = 0; itx < this.cols; itx++) {
       ctx.beginPath(); 
       ctx.moveTo(itx * this.colLength, 0);

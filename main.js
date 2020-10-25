@@ -4,14 +4,18 @@
  * Variables globales
  */
 let canvas = document.getElementById("canvas");
-canvas.addEventListener('mousedown', toggleObstacle)
+canvas.addEventListener('mousedown', toggleObstacle);
+document.addEventListener('keydown', moveCar);
+
 let ctx = canvas.getContext("2d");
-let obstaclesMatrix = []; // Matriz de obstáculos tanto activos como los que no
+// let obstaclesMatrix = []; // Matriz de obstáculos tanto activos como los que no
 let grid = new Grid(
   document.getElementById("filas").value,
   document.getElementById("columnas").value,
   document.getElementById("obstaculos").value
 );
+
+let car = new Car(1,1);
 
 /**
  * @description Función que borra o añade un nuevo obstáculo en la cuadrícula.
@@ -22,6 +26,31 @@ function toggleObstacle(event) {
   let y = Math.floor(event.offsetY / grid.rowLength);
   grid.toggleObstacle(x,y);
   grid.obstacles[x][y].draw();
+  console.log(car.findObstacle()); // prueba
+  // if (si clicas encima del coche no se pone osbtáculo)
+  grid.draw();
+  car.draw();
+}
+
+function moveCar(event) {
+  switch(event.keyCode) {
+    case 37:
+      car.moveTo(0);
+      break;
+    case 38:
+      car.moveTo(1);
+      break;
+    case 39:
+      car.moveTo(2);
+      break;
+    case 40:
+      car.moveTo(3);
+      break;
+  }
+  grid.draw();
+  car.draw();
+
+
 }
 
 /**
@@ -64,4 +93,5 @@ function start() {
   grid.createMatrix();
   addRandomObstacles();
   grid.draw();
+  car.draw();
 }
