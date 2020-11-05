@@ -5,7 +5,6 @@
  */
 let canvas = document.getElementById("canvas");
 canvas.addEventListener('mousedown', toggleObstacle);
-document.addEventListener('keydown', moveCar);
 
 let ctx = canvas.getContext("2d");
 // let obstaclesMatrix = []; // Matriz de obstáculos tanto activos como los que no
@@ -15,7 +14,7 @@ let grid = new Grid(
   document.getElementById("obstaculos").value
 );
 
-let car = new Car(1,1);
+let car = new Car(0,0);
 
 /**
  * @description Función que borra o añade un nuevo obstáculo en la cuadrícula.
@@ -32,26 +31,6 @@ function toggleObstacle(event) {
   car.draw();
 }
 
-function moveCar(event) {
-  switch(event.keyCode) {
-    case 37:
-      car.moveTo(0);
-      break;
-    case 38:
-      car.moveTo(1);
-      break;
-    case 39:
-      car.moveTo(2);
-      break;
-    case 40:
-      car.moveTo(3);
-      break;
-  }
-  grid.draw();
-  car.draw();
-
-
-}
 
 /**
  * @description Función que sirve para actualizar los parámetros a utilizar
