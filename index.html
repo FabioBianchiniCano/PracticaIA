@@ -5,7 +5,7 @@
   </div>
   
   <div style="text-align: center;">
-    <button id="start" onclick="start()">START</button>
+    <button type="submit" id="start" onclick="start()">START</button>
   </div>
   <div style="text-align: center;">
     <div>
@@ -20,7 +20,7 @@
     </div>
     <div>
       <p> Obstáculos:
-        <input type="number" id="obstaculos" value="2" min="1" max="100">
+        <input type="number" id="obstaculos" value="2" min="1" max="10">
       </p>
     </div>
     
@@ -40,19 +40,13 @@
     </div>
     -->
     
-    
-    <div>
-      <p> Este:
-        <button id="start" onclick="car.moveTo(3)">Este</button>
-      </p>
-    </div>
-  </div>
   
   <br>
   
   <div style="text-align: center;">
     <canvas id="canvas" height="700" width="700" style="border: 2px solid;"></canvas>
   </div>
+  <script src="end.js"></script>
   <script src="car.js"></script>
   <script src="obstacle.js"></script>
   <script src="grid.js"></script>

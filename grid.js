@@ -1,7 +1,9 @@
 'use strict';
 
 class Grid {
-  constructor(rows, cols, nObs, color = 'black') {
+  constructor(rows, cols, nObs, car, end, color = 'black') {
+    this.car = car;
+    this.end = end;
     this.color = color;
     this.updateParameters(rows, cols, nObs)
     this.createMatrix();
@@ -65,7 +67,8 @@ class Grid {
       ctx.lineTo(canvas.height, ity * this.rowLength);
       ctx.stroke();
     }
-    
     ctx.strokeStyle = 'black';
+    this.car.draw();
+    this.end.draw();
   }
 }
