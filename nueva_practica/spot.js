@@ -13,18 +13,33 @@ class Spot {
     this.hCost = 0;
     
     this.neighbors = [];
-
-    this.isObstacle = random(1) < 0.4;
-
-    // if (random(1) < 0.4) {
-    //   this.wall = true;
-    // }
-
+    this.father = undefined;
+    this.isObstacle = random(1) < 0.2;
 
   }
 
-  draw() {
-    fill(this.isObstacle ? 0 : bgcolor)
-    rect(this.x * width / cols, this.y * height / rows, this.width, this.height);
+  addNeighbors(grid) {
+    if (this.x < cols - 1) {
+      this.neighbors.push(grid.spots[this.x + 1][this.y]);
+    }
+    if (this.x > 0) {
+      this.neighbors.push(grid.spots[this.x - 1][this.y]);
+    }
+    if (this.y < rows - 1) {
+      this.neighbors.push(grid.spots[this.x][this.y + 1]);
+    }
+    if (this.y > 0) {
+      this.neighbors.push(grid.spots[this.x][this.y - 1]);
+    }
+  }
+
+  draw(color) {
+    if (color) {
+      fill(color);
+    } else {
+      fill(this.isObstacle ? 0 : bgcolor);
+    }
+    // rect(this.x * this.width, this.y * this.height, this.width, this.height);
+    circle(this.x * this.width + (this.width / 2), this. y * this.height + (this.height / 2), this.height)
   }
 }

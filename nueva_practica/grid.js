@@ -1,10 +1,12 @@
-'use strict';
+"use strict";
 
 class Grid {
-  constructor(cols, rows, color = 'black') {
+  constructor(cols, rows, color = "black") {
     this.cols = cols;
     this.rows = rows;
     this.spots;
+    this.start;
+    this.end;
     this.color = color;
     this.createMatrix();
   }
@@ -17,16 +19,17 @@ class Grid {
         this.spots[i][j] = new Spot(i, j);
       }
     }
+    this.start = this.spots[0][0];
+    this.end = this.spots[cols - 1][rows - 1];
+    this.start.isObstacle = false;
+    this.end.isObstacle = false;
   }
 
-
   draw() {
-    console.log(this.spots)
-    
-    for (let i = 0; i < this.cols; i++) 
-      for (let j = 0; j < this.rows; j++) 
+    for (let i = 0; i < this.cols; i++)
+      for (let j = 0; j < this.rows; j++)
         this.spots[i][j].draw();
-
+    noStroke();
     for (let i = 0; i <= cols; i++) {
       line(i * (width / cols), 0, i * (width / cols), height);
     }
