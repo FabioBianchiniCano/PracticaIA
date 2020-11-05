@@ -33,13 +33,17 @@ class Spot {
     }
   }
 
+  toggleObstacle() {
+    this.isObstacle = !this.isObstacle;
+  }
+
   draw(color) {
     if (color) {
       fill(color);
     } else {
       fill(this.isObstacle ? 0 : bgcolor);
     }
-    // rect(this.x * this.width, this.y * this.height, this.width, this.height);
-    circle(this.x * this.width + (this.width / 2), this. y * this.height + (this.height / 2), this.height)
+    rect(this.x * this.width, this.y * this.height, this.width, this.height);
+    // circle(this.x * this.width + (this.width / 2), this. y * this.height + (this.height / 2), this.height)
   }
 }
