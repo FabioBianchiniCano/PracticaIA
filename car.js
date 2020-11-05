@@ -17,16 +17,6 @@ class Car {
   findObstacle() {
     let counter = 0;
     let dirObstacle = [false, false, false, false];
-    // for (let j = -1 ; j <= 1; j += 2) {
-    //   if (this.y + j >= 0)
-    //     dirObstacle[counter] = grid.obstacles[this.x][this.y + j].active;
-    //   counter++;
-    // }
-    // for (let i = -1 ; i <= 1; i += 2) {
-    //   if (this.x + i >= 0); 
-    //     dirObstacle[counter] = grid.obstacles[this.x + i][this.y].active;
-    //   counter++;
-    // }
     if (this.x >= 0 && this.x <= grid.cols - 1 && this.y >= 0 && this.y <= grid.rows - 1) { 
       if (this.x !== 0)
         dirObstacle[0] = grid.obstacles[this.x - 1][this.y].active;

@@ -85,5 +85,4 @@ function start() {
   grid.createMatrix();
   addRandomObstacles();
   grid.draw();
-
 }

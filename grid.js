@@ -50,6 +50,7 @@ class Grid {
    * @description Función que pinta la cuadrícula en el canvas.
    */
   draw() {
+    ctx.clearRect(0, 0, canvas.clientHeight, canvas.clientWidth);
     for (let i = 0; i < this.cols; i++) 
       for (let j = 0; j < this.rows; j++) 
         this.obstacles[i][j].draw();
