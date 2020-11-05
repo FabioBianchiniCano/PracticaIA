@@ -43,7 +43,8 @@ class Spot {
     } else {
       fill(this.isObstacle ? 0 : bgcolor);
     }
-    rect(this.x * this.width, this.y * this.height, this.width, this.height);
+    let tembleque = 1;
+    rect(this.x * this.width + random(tembleque, -tembleque), this.y * this.height  + random(tembleque, -tembleque), this.width, this.height);
     // circle(this.x * this.width + (this.width / 2), this. y * this.height + (this.height / 2), this.height)
   }
 }

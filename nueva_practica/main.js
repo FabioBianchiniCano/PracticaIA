@@ -2,8 +2,8 @@
 
 let grid;
 
-let wcanvas = 431;
-let hcanvas = 300;
+let wcanvas = 800;
+let hcanvas = 600;
 let density = 20;
 let cols = Math.floor(wcanvas / density),
   rows = Math.floor(hcanvas / density);
@@ -49,7 +49,7 @@ function heuristic(current, end) {
 
 function setup() {
   createCanvas(wcanvas, hcanvas);
-  frameRate(10)
+  frameRate(60)
 
   // cols = parseInt(document.getElementById("columnas").value, 10)
   // rows = parseInt(document.getElementById("filas").value, 10)
@@ -149,7 +149,7 @@ function draw() {
 
 
           noFill();
-          stroke(255, 0, 200);
+          stroke(255, 200, 0);
           strokeWeight(width / cols / 2);
           beginShape();
           for (let i = 0; i < path.length; i++) {
