@@ -39,15 +39,27 @@ class Spot {
 
   draw(color) {
     let shapeDraw = () => {
-      rect(this.x * this.width, this.y * this.height, this.width, this.height);
-      // circle(this.x * this.width + (this.width / 2), this. y * this.height + (this.height / 2), this.height * 0.8)
+      let shape;
+      for (let i = 0; i < shapeSelected.options.length; i++) {
+        if (shapeSelected.options[i].selected)
+          shape = shapeSelected.options[i].value;
+      }
+      switch(shape) {
+        case "rect": {
+          rect(this.x * this.width, this.y * this.height, this.width, this.height);
+          break;
+        }
+        case "circle": {
+          circle(this.x * this.width + (this.width / 2), this. y * this.height + (this.height / 2), this.height * 0.8)
+          break;
+        }
+      }
     }
       
     if (color) {
       fill(color);
       shapeDraw();
     } else {
-      // fill(this.isObstacle ? 0 : bgcolor)
       fill(bgcolor)
       rect(this.x * this.width, this.y * this.height, this.width, this.height);
       if (this.isObstacle)  {

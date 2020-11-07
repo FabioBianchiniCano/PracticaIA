@@ -2,25 +2,36 @@
   <head>
     <link rel="stylesheet" type="text/css" href="./css/mystyle.css">
     <script src="p5/p5.min.js" defer async></script>
-    <script src="spot.js" defer async></script> 
-    <script src="grid.js" defer async></script>    
-    <script src="main.js" defer async></script>
+    <script src="src/spot.js" defer async></script> 
+    <script src="src/grid.js" defer async></script>    
+    <script src="src/main.js" defer async></script>
   </head>
   <body style="background-image: url('./img/background-web.jpg');">
+    <h1 style="text-align: center;">Práctica 1 - Inteligencia Artificial</h1>
+
 
     <div id="divParameters" style="text-align:center">
       <label for="pathColor" for>Color del camino</label>
       <input name="pathColor" type="color" id="pathColor" value="#f3b832" onchange="updateParameters()">
-
       <br>
       <button type="submit" id="start" onclick="begin=true;">START</button>
+      <br>
       <label for="heuristic">Seleccione el tipo de heurística</label>
-      <select id="heuristic">
+      <select id="heuristic" onchange="updateParameters()">
         <option value="manhattan">Manhattan</option>
         <option value="hypotenuse">Hipotenusa</option>
+      </select>
+      <br>
+      <label for="shape">Elija la forma de los iconos del laberinto</label>
+      <select id="shape" onchange="updateParameters()">
+        <option value="circle">Círculos</option>
+        <option value="rect">Cuadrados</option>
       </select>
     </div>
 
     <div id="divCanvas" style="text-align: center;"></div>
+    <footer style="text-align: end;">
+      <p>Fabio Bianchini Cano</p>
+    </footer>
   </body>
 </html>

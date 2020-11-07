@@ -9,6 +9,7 @@ let cols = Math.floor(wcanvas / density),
   rows = Math.floor(hcanvas / density);
 
 let heuristicFunction = document.getElementById("heuristic");
+let shapeSelected = document.getElementById("shape");
 
 let start, end;
 
@@ -44,7 +45,15 @@ function mousePressed() {
 }
 
 function updateParameters() {
-  pathColor = document.getElementById("path").value + "";
+  pathColor = document.getElementById("pathColor").value + "";
+  heuristicFunction = document.getElementById("heuristic");
+  shapeSelected = document.getElementById("shape");
+  drawFrame()
+}
+
+function drawFrame() {
+  clear();
+  grid.draw();
 }
 
 function heuristic(current, end) {
@@ -82,11 +91,9 @@ function setup() {
   // rows = parseInt(document.getElementById("filas").value, 10)
 
   grid = new Grid(cols, rows);
-  clear();
-  noStroke();
   bgcolor = color(200, 80);
-  background(bgcolor);
-  grid.draw();
+  noStroke();
+  drawFrame();
 
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
@@ -151,7 +158,7 @@ function draw() {
       noLoop();
       return;
     }
-    background(bgcolor)
+    drawFrame()
     clear();
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
