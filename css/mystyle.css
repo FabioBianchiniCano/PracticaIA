@@ -1,0 +1,7 @@
+@font-face {
+  font-family: "Nunito";
+  src: url('./nunito-v14-latin-regular.woff') format('woff')
+}
+* {
+  font-family: "Nunito"; 
+}

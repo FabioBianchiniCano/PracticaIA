@@ -26,6 +26,7 @@ class Grid {
   }
 
   draw() {
+    clear()
     for (let i = 0; i < this.cols; i++)
       for (let j = 0; j < this.rows; j++)
         this.spots[i][j].draw();

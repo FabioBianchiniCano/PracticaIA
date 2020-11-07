@@ -38,12 +38,22 @@ class Spot {
   }
 
   draw(color) {
+    let shapeDraw = () => {
+      rect(this.x * this.width, this.y * this.height, this.width, this.height);
+      // circle(this.x * this.width + (this.width / 2), this. y * this.height + (this.height / 2), this.height * 0.8)
+    }
+      
     if (color) {
       fill(color);
+      shapeDraw();
     } else {
-      fill(this.isObstacle ? 0 : bgcolor);
+      // fill(this.isObstacle ? 0 : bgcolor)
+      fill(bgcolor)
+      rect(this.x * this.width, this.y * this.height, this.width, this.height);
+      if (this.isObstacle)  {
+        fill(0)
+        shapeDraw();
+      }
     }
-    rect(this.x * this.width, this.y * this.height, this.width, this.height);
-    // circle(this.x * this.width + (this.width / 2), this. y * this.height + (this.height / 2), this.height)
   }
 }

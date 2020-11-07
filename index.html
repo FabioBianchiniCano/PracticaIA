@@ -1,15 +1,26 @@
 <html>
   <head>
+    <link rel="stylesheet" type="text/css" href="./css/mystyle.css">
     <script src="p5/p5.min.js" defer async></script>
     <script src="spot.js" defer async></script> 
     <script src="grid.js" defer async></script>    
     <script src="main.js" defer async></script>
   </head>
-  <body>
-    <button type="submit" id="start" onclick="begin = true;">START</button>
-    <select id="heuristic">
-      <option value="manhattan">Manhattan</option>
-      <option value="hypotenuse">Hipotenusa</option>
-    </select>
+  <body style="background-image: url('./img/background-web.jpg');">
+
+    <div id="divParameters" style="text-align:center">
+      <label for="pathColor" for>Color del camino</label>
+      <input name="pathColor" type="color" id="pathColor" value="#f3b832" onchange="updateParameters()">
+
+      <br>
+      <button type="submit" id="start" onclick="begin=true;">START</button>
+      <label for="heuristic">Seleccione el tipo de heurística</label>
+      <select id="heuristic">
+        <option value="manhattan">Manhattan</option>
+        <option value="hypotenuse">Hipotenusa</option>
+      </select>
+    </div>
+
+    <div id="divCanvas" style="text-align: center;"></div>
   </body>
 </html>

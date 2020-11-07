@@ -16,16 +16,17 @@ let openSet = [];
 let closedSet = [];
 
 let path;
+let pathColor = document.getElementById("pathColor").value + "";
 
 let begin = false;
 
-let bgcolor = 200;
+let bgcolor;
 
 let prevX = 0, prevY = 0; 
 function mouseDragged() {
   let x = Math.floor(mouseX / (width / cols))
   let y = Math.floor(mouseY / (height / rows))
-  if (x < 0 || y < 0){return;}
+  if (x < 0 || y < 0 || x > cols || y > rows){return;}
   if (x != prevX || y != prevY) {
     grid.spots[x][y].toggleObstacle();
     grid.draw();
@@ -37,9 +38,13 @@ function mouseDragged() {
 function mousePressed() {
   let x = Math.floor(mouseX / (width / cols))
   let y = Math.floor(mouseY / (height / rows))
-  if (x < 0 || y < 0){return;}
+  if (x < 0 || y < 0 || x > cols || y > rows){return;}
   grid.spots[x][y].toggleObstacle();
   grid.draw();
+}
+
+function updateParameters() {
+  pathColor = document.getElementById("path").value + "";
 }
 
 function heuristic(current, end) {
@@ -68,7 +73,9 @@ function heuristic(current, end) {
 }
 
 function setup() {
-  createCanvas(wcanvas, hcanvas);
+  let canvas = createCanvas(wcanvas, hcanvas);
+  canvas.style('border: 5px solid black');
+  canvas.parent("divCanvas")
   frameRate(60);
 
   // cols = parseInt(document.getElementById("columnas").value, 10)
@@ -77,6 +84,7 @@ function setup() {
   grid = new Grid(cols, rows);
   clear();
   noStroke();
+  bgcolor = color(200, 80);
   background(bgcolor);
   grid.draw();
 
@@ -90,8 +98,7 @@ function setup() {
 }
 
 function draw() {
-  if (begin) {
-
+  if (begin) { // not beginning  until pressing start button
     //while(!openSet.empty)
     let current;
     if (openSet.length > 0) {
@@ -144,7 +151,8 @@ function draw() {
       noLoop();
       return;
     }
-
+    background(bgcolor)
+    clear();
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
         grid.spots[i][j].draw();
@@ -152,7 +160,7 @@ function draw() {
     }
 
     for (let i = 0; i < closedSet.length; i++) {
-      closedSet[i].draw(color(255, 0, 0, 25));
+      closedSet[i].draw(color(255, 0, 0, 60));
     }
 
     for (let i = 0; i < openSet.length; i++) {
@@ -169,7 +177,7 @@ function draw() {
 
 
     noFill();
-    stroke(255, 200, 0);
+    stroke(pathColor);
     strokeWeight(width / cols / 2);
     beginShape();
     for (let i = 0; i < path.length; i++) {
