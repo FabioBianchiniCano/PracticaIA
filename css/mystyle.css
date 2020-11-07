@@ -9,3 +9,8 @@
 body {
   color: white;
 }
+
+footer {
+  /* border-top-right-radius: 10%; */
+  border-radius: 10px;
+}
