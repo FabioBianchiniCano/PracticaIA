@@ -1,60 +1,15 @@
-<!DOCTYPE html>
-<head>
-  <div style="text-align: center;">
-    <h1>Práctica. Estrategia de búsqueda.</h1>
-  </div>
-  
-  <div style="text-align: center;">
-    <button type="submit" id="start" onclick="start()">START</button>
-  </div>
-  <div style="text-align: center;">
-    <div>
-      <p> Filas:
-        <input type="number" id="filas" value="10" min="1" max="100">
-      </p>
-    </div>
-    <div>
-      <p> Columnas:
-        <input type="number" id="columnas" value="10" min="1" max="100">
-      </p>
-    </div>
-    <div>
-      <p> Obstáculos:
-        <input type="number" id="obstaculos" value="2" min="1" max="10">
-      </p>
-    </div>
-    
-    
-    <!-- Request de salida y meta.
-    <div>
-      <p> Coordenadas de la salida:
-        <input type="number" id="salidax" value="1" min="1" max="100">
-        <input type="number" id="saliday" value="1" min="1" max="100">
-      </p>
-    </div>
-    <div>
-      <p> Coordenadas de la meta:
-        <input type="number" id="metax" value="100" min="1" max="100">
-        <input type="number" id="metay" value="100" min="1" max="100">
-      </p>
-    </div>
-    -->
-    
-  
-  <br>
-  
-  <div style="text-align: center;">
-    <canvas id="canvas" height="700" width="700" style="border: 2px solid;"></canvas>
-  </div>
-  <script src="end.js"></script>
-  <script src="car.js"></script>
-  <script src="obstacle.js"></script>
-  <script src="grid.js"></script>
-  <script src="main.js"></script>
-  
-</head>
-
-<body onload="start()" style =" background: linear-gradient(#967029, #cac0ac) fixed;">
-  
-</body>
+<html>
+  <head>
+    <script src="p5/p5.min.js" defer async></script>
+    <script src="spot.js" defer async></script> 
+    <script src="grid.js" defer async></script>    
+    <script src="main.js" defer async></script>
+  </head>
+  <body>
+    <button type="submit" id="start" onclick="begin = true;">START</button>
+    <select id="heuristic">
+      <option value="manhattan">Manhattan</option>
+      <option value="hypotenuse">Hipotenusa</option>
+    </select>
+  </body>
 </html>

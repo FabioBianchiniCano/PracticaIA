@@ -1,88 +1,186 @@
 "use strict";
 
-/**
- * Variables globales
- */
-let canvas = document.getElementById("canvas");
-let ctx = canvas.getContext("2d");
-let car = new Car(0,0);
-let end = new End(
-  document.getElementById("filas").value - 1,
-  document.getElementById("columnas").value - 1);
-let grid = new Grid(
-  document.getElementById("filas").value,
-  document.getElementById("columnas").value,
-  document.getElementById("obstaculos").value,
-  car, 
-  end
-  );
-  
-canvas.addEventListener('mousedown', toggleObstacle);
+let grid;
 
+let wcanvas = 800;
+let hcanvas = 600;
+let density = 20;
+let cols = Math.floor(wcanvas / density),
+  rows = Math.floor(hcanvas / density);
 
-/**
- * @description Función que borra o añade un nuevo obstáculo en la cuadrícula.
- * @param {object} event Objecto que regista la información del evento.
- */
-function toggleObstacle(event) {
-  let x = Math.floor(event.offsetX / grid.colLength);
-  let y = Math.floor(event.offsetY / grid.rowLength);
-  /* si clicas encima del coche no se pone osbtáculo */
-  if (!((x === car.x && y === car.y) || (x === end.x && y === end.y))) {
-    grid.toggleObstacle(x,y);
-    grid.obstacles[x][y].draw();
-  } else {
-    console.log("no cliques en el coche o la meta");
+let heuristicFunction = document.getElementById("heuristic");
+
+let start, end;
+
+let openSet = [];
+let closedSet = [];
+
+let path;
+
+let begin = false;
+
+let bgcolor = 200;
+
+let prevX = 0, prevY = 0; 
+function mouseDragged() {
+  let x = Math.floor(mouseX / (width / cols))
+  let y = Math.floor(mouseY / (height / rows))
+  if (x < 0 || y < 0){return;}
+  if (x != prevX || y != prevY) {
+    grid.spots[x][y].toggleObstacle();
+    grid.draw();
+    prevX = x;
+    prevY = y;
   }
+}
+
+function mousePressed() {
+  let x = Math.floor(mouseX / (width / cols))
+  let y = Math.floor(mouseY / (height / rows))
+  if (x < 0 || y < 0){return;}
+  grid.spots[x][y].toggleObstacle();
   grid.draw();
-
 }
 
-
-/**
- * @description Función que sirve para actualizar los parámetros a utilizar
- * por la cuadrícula.
- */
-function updateParameters() {
-  if (document.getElementById("obstaculos").value >= (grid.rows * grid.cols) - 1) {
-    alert("Introduzca un número de obstáculos menor");
-    document.getElementById("obstaculos").value = grid.rows * grid.cols / 2;
+function heuristic(current, end) {
+  let selectedHeur;
+  for (let i = 0; i < heuristicFunction.options.length; i++) {
+    if (heuristicFunction.options[i].selected)
+      selectedHeur = heuristicFunction.options[i].value;
   }
-  grid.updateParameters(
-    document.getElementById("filas").value,
-    document.getElementById("columnas").value,
-    document.getElementById("obstaculos").value
-  );
-  grid.createMatrix();
-}
 
-/**
- * @description Función que añade de manera aleatoria obstáculos a lo largo de
- *              toda la cuadrícula.
- */
-function addRandomObstacles() {
-  for (let i = 0; i < grid.nObs; i++) {
-    let randx = Math.floor(Math.random() * grid.cols);
-    let randy = Math.floor(Math.random() * grid.rows);
-    if (grid.obstacles[randx][randy].active ||
-      ((car.x === randx && car.y === randy) ||
-      (end.x === randx && end.y === randy))) {
-      i--;
-    } else {
-      grid.obstacles[randx][randy].active = true;
+  let distance;
+  switch(selectedHeur) {
+    case "manhattan": {
+      distance = abs(current.x - end.x) + abs(current.y - end.y); //manhattan
+      break;
+    } 
+    case "hypotenuse": {
+      distance = dist(current.i, current.j, end.i, end.j); //linea recta
+      break;
+    }
+    default: {
+      distance = abs(current.x - end.x) + abs(current.y - end.y); //manhattan
+      break;
     }
   }
+  return distance;
 }
 
+function setup() {
+  createCanvas(wcanvas, hcanvas);
+  frameRate(60);
 
-/**
- * @description Función que se ejecuta al cargar la página y al darle
- *              al botón de start.
- */
-function start() {
-  ctx.clearRect(0, 0, canvas.clientHeight, canvas.clientWidth);
-  updateParameters();
-  grid.createMatrix();
-  addRandomObstacles();
+  // cols = parseInt(document.getElementById("columnas").value, 10)
+  // rows = parseInt(document.getElementById("filas").value, 10)
+
+  grid = new Grid(cols, rows);
+  clear();
+  noStroke();
+  background(bgcolor);
   grid.draw();
+
+  for (let i = 0; i < cols; i++) {
+    for (let j = 0; j < rows; j++) {
+      if (!grid.spots[i][j].isObstacle) grid.spots[i][j].addNeighbors(grid);
+    }
+  }
+
+  openSet.push(grid.start);
+}
+
+function draw() {
+  if (begin) {
+
+    //while(!openSet.empty)
+    let current;
+    if (openSet.length > 0) {
+      let nextIter = 0;
+      for (let i = 0; i < openSet.length; i++) {
+        if (openSet[i].fCost < openSet[nextIter].fCost) {
+          nextIter = i;
+        }
+      }
+      current = openSet[nextIter];
+
+      // if we arrived
+      if (current === grid.end) {
+        console.log("LLEGAMOS");
+        noLoop();
+        return;
+      }
+
+      // remove current from openSet
+      openSet.splice(openSet.indexOf(current), 1);
+      closedSet.push(current);
+
+      for (let i = 0; i < current.neighbors.length; i++) {
+        let neighbor = current.neighbors[i];
+        if (!closedSet.includes(neighbor) && !neighbor.isObstacle) {
+          //tempGCost es la distancia entre start y neighbor pasando por current
+          let tempGCost = current.gCost + 1; // heuristic(neighbor, current)
+          let isNewPath = false;
+
+          if (openSet.includes(neighbor)) { // si ya se ha mirado
+            if (tempGCost < neighbor.gCost) { // compruebo que el camino actual es mejor
+              neighbor.gCost = tempGCost;
+              isNewPath = true;
+            }
+          } else { // cuando no se había mirado ese nodo hasta ahora
+            neighbor.gCost = tempGCost;
+            isNewPath = true;
+            openSet.push(neighbor);
+          }
+
+          if (isNewPath) {
+            neighbor.hCost = heuristic(neighbor, grid.end);
+            neighbor.fCost = neighbor.gCost + neighbor.hCost;
+            neighbor.father = current;
+          }
+        }
+      }
+    } else {
+      console.log("No se ha encontrado un camino disponible :(");
+      noLoop();
+      return;
+    }
+
+    for (let i = 0; i < cols; i++) {
+      for (let j = 0; j < rows; j++) {
+        grid.spots[i][j].draw();
+      }
+    }
+
+    for (let i = 0; i < closedSet.length; i++) {
+      closedSet[i].draw(color(255, 0, 0, 25));
+    }
+
+    for (let i = 0; i < openSet.length; i++) {
+      openSet[i].draw(color(0, 255, 0, 150));
+    }
+
+    path = [];
+    let currentForPath = current;
+    path.push(currentForPath);
+    while (currentForPath.father) {
+      path.push(currentForPath.father);
+      currentForPath = currentForPath.father;
+    }
+
+
+    noFill();
+    stroke(255, 200, 0);
+    strokeWeight(width / cols / 2);
+    beginShape();
+    for (let i = 0; i < path.length; i++) {
+      // path[i].draw(color(0, 0, 255, path[i].x * 255 / 50))
+      vertex(
+        path[i].x * path[i].width + path[i].width / 2,
+        path[i].y * path[i].height + path[i].height / 2
+      );
+    }
+    endShape();
+    noStroke();
+              
+  }
 }
