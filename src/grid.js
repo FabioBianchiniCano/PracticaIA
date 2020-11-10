@@ -25,6 +25,14 @@ class Grid {
     this.end.isObstacle = false;
   }
 
+  updateNeighbors() {
+    for (let i = 0; i < cols; i++) {
+      for (let j = 0; j < rows; j++) {
+        if (!this.spots[i][j].isObstacle) this.spots[i][j].addNeighbors();
+      }
+    }
+  }
+
   draw() {
     clear()
     for (let i = 0; i < this.cols; i++)

@@ -18,7 +18,7 @@ class Spot {
 
   }
 
-  addNeighbors(grid) {
+  addNeighbors() {
     if (this.x < cols - 1) {
       this.neighbors.push(grid.spots[this.x + 1][this.y]);
     }
@@ -35,6 +35,7 @@ class Spot {
 
   toggleObstacle() {
     this.isObstacle = !this.isObstacle;
+    this.addNeighbors();
   }
 
   draw(color) {

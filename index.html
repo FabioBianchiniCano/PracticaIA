@@ -14,7 +14,7 @@
       <label for="pathColor" for>Color del camino</label>
       <input name="pathColor" type="color" id="pathColor" value="#f3b832" onchange="updateParameters()">
       <br>
-      <button type="submit" id="start" onclick="begin=true;">START</button>
+      <button type="submit" id="start" onclick="status.PRE_BEGIN=false;">START</button>
       <br>
       <label for="heuristic">Seleccione el tipo de heurística</label>
       <select id="heuristic" onchange="updateParameters()">
@@ -27,6 +27,15 @@
         <option value="circle">Círculos</option>
         <option value="rect">Cuadrados</option>
       </select>
+      <br>
+      <br>
+      <label for="filas" for>Filas:
+        <input type="number" id="filas" value="10" min="1" max="100" onchange="updateParameters()">
+      </label>
+      <label for="columas" for>Columas:
+        <input type="number" id="columnas" value="10" min="1" max="100" onchange="updateParameters()">
+      </label>
+      <br>
     </div>
 
     <div id="divCanvas" style="text-align: center; margin: 5%;"></div>

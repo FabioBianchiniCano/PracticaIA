@@ -19,7 +19,14 @@ let closedSet = [];
 let path;
 let pathColor = document.getElementById("pathColor").value + "";
 
-let begin = false;
+
+let status = {
+  PRE_BEGIN: true,
+  WORKING: false,
+  FINISHED: false,
+
+}
+
 
 let bgcolor;
 
@@ -40,15 +47,21 @@ function mousePressed() {
   let x = Math.floor(mouseX / (width / cols))
   let y = Math.floor(mouseY / (height / rows))
   if (x < 0 || y < 0 || x > cols || y > rows){return;}
-  grid.spots[x][y].toggleObstacle();
-  grid.draw();
+  if (mouseButton === "center") {
+    console.log(grid.spots[x][y])
+  } else {
+    grid.spots[x][y].toggleObstacle();
+    grid.draw();
+  }
+  return false;
 }
 
 function updateParameters() {
   pathColor = document.getElementById("pathColor").value + "";
   heuristicFunction = document.getElementById("heuristic");
   shapeSelected = document.getElementById("shape");
-  drawFrame()
+  // grid.updateNeighbors();
+  drawFrame(); 
 }
 
 function drawFrame() {
@@ -95,17 +108,13 @@ function setup() {
   noStroke();
   drawFrame();
 
-  for (let i = 0; i < cols; i++) {
-    for (let j = 0; j < rows; j++) {
-      if (!grid.spots[i][j].isObstacle) grid.spots[i][j].addNeighbors(grid);
-    }
-  }
+  grid.updateNeighbors();
 
   openSet.push(grid.start);
 }
 
 function draw() {
-  if (begin) { // not beginning  until pressing start button
+  if (!status.PRE_BEGIN) { // not beginning  until pressing start button
     //while(!openSet.empty)
     let current;
     if (openSet.length > 0) {
