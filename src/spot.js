@@ -14,7 +14,9 @@ class Spot {
     
     this.neighbors = [];
     this.father = undefined;
-    this.isObstacle = random(1) < 0.2;
+    this.isObstacle = false;
+
+    this.isStart = false;
 
   }
 
@@ -33,8 +35,11 @@ class Spot {
     }
   }
 
-  toggleObstacle() {
-    this.isObstacle = !this.isObstacle;
+  toggleObstacle(button) {
+    console.log(button)
+    if (button === "left") this.isObstacle = true;
+    else if (button === "right") this.isObstacle = false;
+    // this.isObstacle = !this.isObstacle;
     this.addNeighbors();
   }
 

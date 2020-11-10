@@ -23,44 +23,66 @@ let pathColor = document.getElementById("pathColor").value + "";
 let status = {
   PRE_BEGIN: true,
   WORKING: false,
-  FINISHED: false,
-
+  FINISHED: false
 }
 
 
 let bgcolor;
 
 let prevX = 0, prevY = 0; 
-function mouseDragged() {
+function mouseDragged(event) {
+  if (status.WORKING || status.FINISHED) {return}
   let x = Math.floor(mouseX / (width / cols))
   let y = Math.floor(mouseY / (height / rows))
   if (x < 0 || y < 0 || x > cols || y > rows){return;}
   if (x != prevX || y != prevY) {
-    grid.spots[x][y].toggleObstacle();
+    grid.spots[x][y].toggleObstacle(mouseButton);
     grid.draw();
     prevX = x;
     prevY = y;
   }
 }
 
-function mousePressed() {
+function mousePressed(event) {
+  if (status.WORKING || status.FINISHED) {return}
   let x = Math.floor(mouseX / (width / cols))
   let y = Math.floor(mouseY / (height / rows))
   if (x < 0 || y < 0 || x > cols || y > rows){return;}
-  if (mouseButton === "center") {
-    console.log(grid.spots[x][y])
-  } else {
-    grid.spots[x][y].toggleObstacle();
-    grid.draw();
-  }
+  grid.spots[x][y].toggleObstacle(mouseButton);
+  grid.draw();
   return false;
 }
 
+function keyPressed() {
+  switch(keyCode) {
+    case 32: {
+      if (status.WORKING) {return}
+      grid.genObstacles(document.getElementById("probObstacles").value);
+      drawFrame();
+      return false;
+      break;
+    }
+    case 82: {
+      status.WORKING = false;
+      status.PRE_BEGIN = true;
+      status.FINISHED = false;
+      openSet = [];
+      closedSet = [];
+      grid.createMatrix();
+      grid.genObstacles(0);
+      grid.updateNeighbors();
+      openSet.push(grid.start);
+      drawFrame();
+      break;
+    }
+  }
+}
+
 function updateParameters() {
+  if (status.WORKING) {return}
   pathColor = document.getElementById("pathColor").value + "";
   heuristicFunction = document.getElementById("heuristic");
   shapeSelected = document.getElementById("shape");
-  // grid.updateNeighbors();
   drawFrame(); 
 }
 
@@ -107,14 +129,14 @@ function setup() {
   bgcolor = color(200, 80);
   noStroke();
   drawFrame();
-
+  
   grid.updateNeighbors();
 
   openSet.push(grid.start);
 }
 
 function draw() {
-  if (!status.PRE_BEGIN) { // not beginning  until pressing start button
+  if (!status.PRE_BEGIN && !status.FINISHED) { // not beginning  until pressing start button
     //while(!openSet.empty)
     let current;
     if (openSet.length > 0) {
@@ -129,7 +151,9 @@ function draw() {
       // if we arrived
       if (current === grid.end) {
         console.log("LLEGAMOS");
-        noLoop();
+        status.WORKING = false;
+        status.FINISHED = true;
+        // noLoop();
         return;
       }
 
@@ -164,7 +188,9 @@ function draw() {
       }
     } else {
       console.log("No se ha encontrado un camino disponible :(");
-      noLoop();
+      status.WORKING = false;
+      status.FINISHED = true;
+      // noLoop();
       return;
     }
     drawFrame()

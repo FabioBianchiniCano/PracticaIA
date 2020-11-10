@@ -19,10 +19,10 @@ class Grid {
         this.spots[i][j] = new Spot(i, j);
       }
     }
-    this.start = this.spots[0][0];
+    this.start = this.spots[Math.floor(cols / 2)][Math.floor(rows / 2)];
     this.end = this.spots[cols - 1][rows - 1];
-    this.start.isObstacle = false;
-    this.end.isObstacle = false;
+
+    this.start.isStart = true;
   }
 
   updateNeighbors() {
@@ -33,11 +33,24 @@ class Grid {
     }
   }
 
+  genObstacles(prob) {
+    for (let i = 0; i < cols; i++) {
+      for (let j = 0; j < rows; j++) {
+        this.spots[i][j].isObstacle = random(1) < prob;
+      }
+    }
+    this.updateNeighbors()
+    this.start.isObstacle = false;
+    this.end.isObstacle = false;
+
+  }
+
   draw() {
     clear()
     for (let i = 0; i < this.cols; i++)
       for (let j = 0; j < this.rows; j++)
         this.spots[i][j].draw();
+    this.start.draw(200,200,200);
     noStroke();
     for (let i = 0; i <= cols; i++) {
       line(i * (width / cols), 0, i * (width / cols), height);
