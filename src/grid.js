@@ -19,7 +19,7 @@ class Grid {
         this.spots[i][j] = new Spot(i, j);
       }
     }
-    this.start = this.spots[Math.floor(cols / 2)][Math.floor(rows / 2)];
+    this.start = this.spots[0][0];
     this.end = this.spots[cols - 1][rows - 1];
 
     this.start.isStart = true;

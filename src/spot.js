@@ -36,7 +36,6 @@ class Spot {
   }
 
   toggleObstacle(button) {
-    console.log(button)
     if (button === "left") this.isObstacle = true;
     else if (button === "right") this.isObstacle = false;
     // this.isObstacle = !this.isObstacle;

@@ -50,7 +50,9 @@ function mousePressed(event) {
   if (x < 0 || y < 0 || x > cols || y > rows){return;}
   grid.spots[x][y].toggleObstacle(mouseButton);
   grid.draw();
-  return false;
+  if (mouseButton === 'right') {
+    return false;
+  }
 }
 
 function keyPressed() {
