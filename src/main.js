@@ -88,12 +88,18 @@ function updateParameters() {
   pathColor = document.getElementById("pathColor").value + "";
   heuristicFunction = document.getElementById("heuristic");
   shapeSelected = document.getElementById("shape");
+  drawFrame(); 
+}
+
+function createNewGrid() {
   cols = document.getElementById("columnas").value;
   rows = document.getElementById("filas").value;
   grid = new Grid(cols, rows);
   grid.updateNeighbors();
+  openSet = [];
+  closedSet = [];
   openSet.push(grid.start);
-  drawFrame(); 
+  drawFrame();
 }
 
 function drawFrame() {
