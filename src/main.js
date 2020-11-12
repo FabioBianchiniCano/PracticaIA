@@ -80,6 +80,12 @@ function keyPressed() {
       drawFrame();
       break;
     }
+    case 83: { // s - put start
+
+    }
+    case 69: { // e - put end
+
+    }
   }
 }
 
@@ -92,6 +98,7 @@ function updateParameters() {
 }
 
 function createNewGrid() {
+  if (status.WORKING) {return}
   cols = document.getElementById("columnas").value;
   rows = document.getElementById("filas").value;
   grid = new Grid(cols, rows);
