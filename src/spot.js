@@ -15,9 +15,6 @@ class Spot {
     this.neighbors = [];
     this.father = undefined;
     this.isObstacle = false;
-
-    this.isStart = false;
-
   }
 
   addNeighbors() {

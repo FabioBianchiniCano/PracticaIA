@@ -5,8 +5,11 @@ let grid;
 let wcanvas = 800;
 let hcanvas = 600;
 let density = 20;
-let cols = Math.floor(wcanvas / density),
-  rows = Math.floor(hcanvas / density);
+// let cols = Math.floor(wcanvas / density),
+//   rows = Math.floor(hcanvas / density);
+
+let cols = document.getElementById("columnas").value;
+let rows = document.getElementById("filas").value;
 
 let heuristicFunction = document.getElementById("heuristic");
 let shapeSelected = document.getElementById("shape");
@@ -57,14 +60,14 @@ function mousePressed(event) {
 
 function keyPressed() {
   switch(keyCode) {
-    case 32: {
+    case 32: { // space - GENERATE OSBTACLES
       if (status.WORKING) {return}
       grid.genObstacles(document.getElementById("probObstacles").value);
       drawFrame();
       return false;
       break;
     }
-    case 82: {
+    case 82: { // r - RESTART
       status.WORKING = false;
       status.PRE_BEGIN = true;
       status.FINISHED = false;
@@ -85,6 +88,11 @@ function updateParameters() {
   pathColor = document.getElementById("pathColor").value + "";
   heuristicFunction = document.getElementById("heuristic");
   shapeSelected = document.getElementById("shape");
+  cols = document.getElementById("columnas").value;
+  rows = document.getElementById("filas").value;
+  grid = new Grid(cols, rows);
+  grid.updateNeighbors();
+  openSet.push(grid.start);
   drawFrame(); 
 }
 
@@ -123,9 +131,6 @@ function setup() {
   canvas.style('border: 5px solid black');
   canvas.parent("divCanvas")
   frameRate(60);
-
-  // cols = parseInt(document.getElementById("columnas").value, 10)
-  // rows = parseInt(document.getElementById("filas").value, 10)
 
   grid = new Grid(cols, rows);
   bgcolor = color(200, 80);

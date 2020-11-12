@@ -21,8 +21,6 @@ class Grid {
     }
     this.start = this.spots[0][0];
     this.end = this.spots[cols - 1][rows - 1];
-
-    this.start.isStart = true;
   }
 
   updateNeighbors() {
@@ -50,7 +48,8 @@ class Grid {
     for (let i = 0; i < this.cols; i++)
       for (let j = 0; j < this.rows; j++)
         this.spots[i][j].draw();
-    this.start.draw(200,200,200);
+    this.start.draw('white');
+    this.end.draw('pink');
     noStroke();
     for (let i = 0; i <= cols; i++) {
       line(i * (width / cols), 0, i * (width / cols), height);
