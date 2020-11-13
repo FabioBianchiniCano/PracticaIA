@@ -58,6 +58,7 @@ function mousePressed(event) {
   }
 }
 
+
 function keyPressed() {
   switch(keyCode) {
     case 32: { // space - GENERATE OSBTACLES
@@ -81,10 +82,25 @@ function keyPressed() {
       break;
     }
     case 83: { // s - put start
-
+      
+      if (status.WORKING || status.FINISHED) {return}
+      let x = Math.floor(mouseX / (width / cols))
+      let y = Math.floor(mouseY / (height / rows))
+      if (x < 0 || y < 0 || x > cols || y > rows){return;}
+      grid.start = grid.spots[x][y];
+      openSet.pop();
+      openSet.push(grid.start);     
+      drawFrame();
+      break;
     }
     case 69: { // e - put end
-
+      if (status.WORKING || status.FINISHED) {return}
+      let x = Math.floor(mouseX / (width / cols))
+      let y = Math.floor(mouseY / (height / rows))
+      if (x < 0 || y < 0 || x > cols || y > rows){return;}
+      grid.end = grid.spots[x][y];    
+      drawFrame();
+      break;
     }
   }
 }
@@ -139,6 +155,30 @@ function heuristic(current, end) {
   return distance;
 }
 
+function drawPath(current) {
+  path = [];
+    let currentForPath = current;
+    path.push(currentForPath);
+    while (currentForPath.father) {
+      path.push(currentForPath.father);
+      currentForPath = currentForPath.father;
+    }
+
+    noFill();
+    stroke(pathColor);
+    strokeWeight((grid.spots[0][0].height + grid.spots[0][0].width)* 0.15);
+    beginShape();
+    for (let i = 0; i < path.length; i++) {
+      // path[i].draw(color(0, 0, 255, path[i].x * 255 / 50))
+      vertex(
+        path[i].x * path[i].width + path[i].width / 2,
+        path[i].y * path[i].height + path[i].height / 2
+      );
+    }
+    endShape();
+    noStroke();
+}
+
 function setup() {
   let canvas = createCanvas(wcanvas, hcanvas);
   canvas.style('border: 5px solid black');
@@ -170,6 +210,15 @@ function draw() {
 
       // if we arrived
       if (current === grid.end) {
+        drawFrame();
+        for (let i = 0; i < closedSet.length; i++) {
+          closedSet[i].draw(color(255, 0, 0, 60));
+        }
+    
+        for (let i = 0; i < openSet.length; i++) {
+          openSet[i].draw(color(0, 255, 0, 150));
+        }
+        drawPath(current);
         console.log("LLEGAMOS");
         status.WORKING = false;
         status.FINISHED = true;
@@ -229,28 +278,10 @@ function draw() {
       openSet[i].draw(color(0, 255, 0, 150));
     }
 
-    path = [];
-    let currentForPath = current;
-    path.push(currentForPath);
-    while (currentForPath.father) {
-      path.push(currentForPath.father);
-      currentForPath = currentForPath.father;
-    }
+    grid.start.draw('white');
+    grid.end.draw('pink');
 
-
-    noFill();
-    stroke(pathColor);
-    strokeWeight(width / cols / 2);
-    beginShape();
-    for (let i = 0; i < path.length; i++) {
-      // path[i].draw(color(0, 0, 255, path[i].x * 255 / 50))
-      vertex(
-        path[i].x * path[i].width + path[i].width / 2,
-        path[i].y * path[i].height + path[i].height / 2
-      );
-    }
-    endShape();
-    noStroke();
+    drawPath(current);
               
   }
 }

@@ -52,7 +52,7 @@ class Spot {
           break;
         }
         case "circle": {
-          circle(this.x * this.width + (this.width / 2), this. y * this.height + (this.height / 2), this.height * 0.8)
+          circle(this.x * this.width + (this.width / 2), this. y * this.height + (this.height / 2), (this.height + this.width) * 0.3)
           break;
         }
       }
