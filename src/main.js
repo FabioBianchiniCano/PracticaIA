@@ -11,7 +11,7 @@
 "use strict";
 
 /**
- * @description Declaración de las variables globales
+ * @description Declaración de las variables globales.
  */
 let grid;
 
@@ -40,11 +40,7 @@ let tableInfo = {
   execTime: 0
 }
 
-let status = {
-  PRE_BEGIN: true,
-  WORKING: false,
-  FINISHED: false
-}
+let status = new Status;
 
 let bgcolor;
 
@@ -92,9 +88,7 @@ function keyPressed() {
      * @param r Pulsando la tecla r reseteamos los parametros del tablero.
     */
     case 82: { 
-      status.WORKING = false;
-      status.PRE_BEGIN = true;
-      status.FINISHED = false;
+      status.transition('PRE_BEGIN');
       document.getElementById("nNodos").innerHTML = "";
       document.getElementById("longCamino").innerHTML = "";
       document.getElementById("tEjec").innerHTML = "";        
@@ -188,8 +182,8 @@ function drawFrame() {
 
 /**
  * @description Función que elige la función heurística a seguir.
- * @param {spot} current Objeto tipo spot que representa la posición X
- * @param {spot} end Objeto tipo spot que representa la posición Y
+ * @param {object} current Objeto tipo spot que representa la posición X.
+ * @param {object} end Objeto tipo spot que representa la posición Y.
  */
 function heuristic(current, end) {
   let selectedHeur;
@@ -218,7 +212,7 @@ function heuristic(current, end) {
 
 /**
  * @description Función que dibuja el camino que recorre el algoritmo.
- * @param {spot} current Objeto tipo spot
+ * @param {object} current Objeto tipo spot que representa la posición actual.
  */
 function drawPath(current) {
   path = [];
@@ -247,8 +241,7 @@ function drawPath(current) {
  */
 function startExecution() {
   if (status.WORKING) {return}
-  status.PRE_BEGIN = false;
-  status.WORKING = true;
+  status.transition('WORKING');
   timeHandler.start = performance.now();
 }
 
@@ -263,6 +256,7 @@ function updateWriteTable() {
 
 /**
  * @description Función que prepara los parámetros que van a ser utilizados en la creación del tablero.
+ * Esta función es de la librería p5.js y se ejecuta una sola vez al inicio del programa.
  */
 function setup() {
   let canvas = createCanvas(wcanvas, hcanvas);
@@ -281,6 +275,8 @@ function setup() {
 
 /**
  * @description Función que llama a todos los métodos que representan visualmente el algoritmo.
+ * Esta función es de la librería p5.js y se ejecuta justo después de setup y luego continuamente 
+ * hasta que es detenida manualmente.
  */
 function draw() {
   if (!status.PRE_BEGIN && !status.FINISHED) { // not beginning  until pressing start button
@@ -305,7 +301,7 @@ function draw() {
 }
 
 /**
- * @description Función que
+ * @description Función donde se describe el Algoritmo A*
  */
 function algorythmAStar() {
   let current;
@@ -317,8 +313,8 @@ function algorythmAStar() {
         }
       }
       current = openSet[nextIter];
-
-      // if we arrived
+      
+      /* Si llegamos */
       if (current === grid.end) {
         timeHandler.end = performance.now();
         drawFrame();
@@ -329,30 +325,30 @@ function algorythmAStar() {
           openSet[i].draw(color(0, 255, 0, 150));
         }
         drawPath(current);
-        console.log("LLEGAMOS");
         updateWriteTable();
-        status.WORKING = false;
-        status.FINISHED = true;
+        status.transition('FINISHED')
         return grid.end;
       }
 
-      // remove current from openSet
+      /* Borra current de openSet */
       openSet.splice(openSet.indexOf(current), 1);
       closedSet.push(current);
 
       for (let i = 0; i < current.neighbors.length; i++) {
         let neighbor = current.neighbors[i];
         if (!closedSet.includes(neighbor) && !neighbor.isObstacle) {
-          //tempGCost es la distancia entre start y neighbor pasando por current
-          let tempGCost = current.gCost + 1; // heuristic(neighbor, current)
+          /*La variable tempGCost es la distancia entre start y neighbor pasando por current */
+          let tempGCost = current.gCost + 1; 
           let isNewPath = false;
 
-          if (openSet.includes(neighbor)) { // si ya se ha mirado
-            if (tempGCost < neighbor.gCost) { // compruebo que el camino actual es mejor
+          /* Si el neighbor se encuentra visitado */
+          if (openSet.includes(neighbor)) { 
+            /*Comprobamos si seguimos en el camino óptimo */
+            if (tempGCost < neighbor.gCost) {
               neighbor.gCost = tempGCost;
               isNewPath = true;
             }
-          } else { // cuando no se había mirado ese nodo hasta ahora
+          } else { 
             neighbor.gCost = tempGCost;
             isNewPath = true;
             openSet.push(neighbor);
@@ -366,15 +362,9 @@ function algorythmAStar() {
         }
       }
     } else {
-      console.log("No se ha encontrado un camino disponible :(");
       updateWriteTable();
-      status.WORKING = false;
-      status.FINISHED = true;
-      // noLoop();
+      status.transition('FINISHED')
       return;
     }
-    
-    
-
     return current;
 }

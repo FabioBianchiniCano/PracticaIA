@@ -1,8 +1,16 @@
+<!--
+  Fichero index.html donde desarollamos la interfaz web
+  Autores: Fabio Bianchini Cano
+          Nerea Rodríguez Hernández
+          Cesar Ángel Salgado Navarro
+  Fecha: 15/11/2020
+-->
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="./css/mystyle.css">
     <script src="p5/p5.min.js" defer async></script>
-    <script src="src/time.js" defer async></script> 
+    <script src="src/status.js" defer async></script> 
+    <script src="src/timehandler.js" defer async></script> 
     <script src="src/spot.js" defer async></script> 
     <script src="src/grid.js" defer async></script>    
     <script src="src/main.js" defer async></script>
@@ -13,9 +21,6 @@
     <div id="divParameters">
       <label for="pathColor" for>Color del camino</label>
       <input name="pathColor" type="color" id="pathColor" value="#f3b832" onchange="updateParameters()">
-      <br>
-      <button type="submit" id="start" onclick="startExecution()">START</button>
-      <!-- <button type="submit" id="restart" onclick="status.PRE_BEGIN=true; status.FINISHED=false;">RESTART</button> -->
       <br>
       <label for="heuristic">Seleccione el tipo de heurística</label>
       <select id="heuristic" onchange="updateParameters()">
