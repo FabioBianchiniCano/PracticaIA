@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Grid</title>
+    <title>JSDoc: Class: Spot</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Grid</h1>
+    <h1 class="page-title">Class: Spot</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Grid<span class="signature">()</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Spot<span class="signature">()</span><span class="type-signature"></span></h2>
         
     
 </header>
@@ -41,7 +41,7 @@
     
 
     
-    <h4 class="name" id="Grid"><span class="type-signature"></span>new Grid<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Spot"><span class="type-signature"></span>new Spot<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -89,7 +89,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="grid.js.html">grid.js</a>, <a href="grid.js.html#line11">line 11</a>
+        <a href="spot.js.html">spot.js</a>, <a href="spot.js.html#line11">line 11</a>
     </li></ul></dd>
     
 
@@ -145,7 +145,7 @@
     
 
     
-    <h4 class="name" id="createMatrix"><span class="type-signature"></span>createMatrix<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="addNeighbors"><span class="type-signature"></span>addNeighbors<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -153,7 +153,7 @@
 
 
 <div class="description">
-    Función que crea la matriz de nuestro tablero
+    Función que añade los vecinos en la cuadrícula.
 </div>
 
 
@@ -197,7 +197,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="grid.js.html">grid.js</a>, <a href="grid.js.html#line35">line 35</a>
+        <a href="spot.js.html">spot.js</a>, <a href="spot.js.html#line40">line 40</a>
     </li></ul></dd>
     
 
@@ -233,7 +233,7 @@
     
 
     
-    <h4 class="name" id="draw"><span class="type-signature"></span>draw<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="draw"><span class="type-signature"></span>draw<span class="signature">(color)</span><span class="type-signature"></span></h4>
     
 
     
@@ -241,95 +241,7 @@
 
 
 <div class="description">
-    Función que nos representa graficamente el tablero.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="grid.js.html">grid.js</a>, <a href="grid.js.html#line77">line 77</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="genObstacles"><span class="type-signature"></span>genObstacles<span class="signature">(prob)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Función que genera multiples obstáculos dada una probabilidad
+    Función que nos permite colocar obstáculos manualmente clicando con nuestro ratón.
 </div>
 
 
@@ -365,13 +277,13 @@
 
         <tr>
             
-                <td class="name"><code>prob</code></td>
+                <td class="name"><code>color</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
             
@@ -381,7 +293,7 @@
 
             
 
-            <td class="description last">Dato de tipo float que representa la probabilidad de obstaculos (rango = [0,1])</td>
+            <td class="description last">Color con el que se pinta el relleno de la sección de rectángulo.</td>
         </tr>
 
     
@@ -422,7 +334,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="grid.js.html">grid.js</a>, <a href="grid.js.html#line62">line 62</a>
+        <a href="spot.js.html">spot.js</a>, <a href="spot.js.html#line70">line 70</a>
     </li></ul></dd>
     
 
@@ -458,7 +370,7 @@
     
 
     
-    <h4 class="name" id="updateNeighbors"><span class="type-signature"></span>updateNeighbors<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="toggleObstacle"><span class="type-signature"></span>toggleObstacle<span class="signature">(button)</span><span class="type-signature"></span></h4>
     
 
     
@@ -466,7 +378,7 @@
 
 
 <div class="description">
-    Función que actualiza los vecinos del tablero.
+    Función que nos permite colocar obstáculos manualmente clicando con nuestro ratón.
 </div>
 
 
@@ -475,6 +387,55 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>button</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Evento que si clicanmos en el boton izquierdo del ratón coloca el obstáculo.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -510,7 +471,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="grid.js.html">grid.js</a>, <a href="grid.js.html#line50">line 50</a>
+        <a href="spot.js.html">spot.js</a>, <a href="spot.js.html#line60">line 60</a>
     </li></ul></dd>
     
 
@@ -560,7 +521,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Grid<span class="signature">(cols, rows, color)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Spot<span class="signature">(x, y)</span><span class="type-signature"></span></h2>
         
     
 </header>
@@ -573,7 +534,7 @@
     
 
     
-    <h4 class="name" id="Grid"><span class="type-signature"></span>new Grid<span class="signature">(cols, rows, color)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Spot"><span class="type-signature"></span>new Spot<span class="signature">(x, y)</span><span class="type-signature"></span></h4>
     
 
     
@@ -607,8 +568,6 @@
         
 
         
-        <th>Default</th>
-        
 
         <th class="last">Description</th>
     </tr>
@@ -619,7 +578,7 @@
 
         <tr>
             
-                <td class="name"><code>cols</code></td>
+                <td class="name"><code>x</code></td>
             
 
             <td class="type">
@@ -634,19 +593,15 @@
             
 
             
-                <td class="default">
-                
-                </td>
-            
 
-            <td class="description last">Dato de tipo entero que enumera la cantidad de columnas.</td>
+            <td class="description last">Dato de tipo entero que muestra la posición del eje x en la cuadrícula.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>rows</code></td>
+                <td class="name"><code>y</code></td>
             
 
             <td class="type">
@@ -661,41 +616,8 @@
             
 
             
-                <td class="default">
-                
-                </td>
-            
 
-            <td class="description last">Dato de tipo entero que enumera la cantidad de filas.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>color</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    black
-                
-                </td>
-            
-
-            <td class="description last">Color con el que se pintan las líneas de la cuadrícula.</td>
+            <td class="description last">Dato de tipo entero que muestra la posición del eje y en la cuadrícula.</td>
         </tr>
 
     
@@ -736,7 +658,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="grid.js.html">grid.js</a>, <a href="grid.js.html#line22">line 22</a>
+        <a href="spot.js.html">spot.js</a>, <a href="spot.js.html#line21">line 21</a>
     </li></ul></dd>
     
 
@@ -792,7 +714,7 @@
     
 
     
-    <h4 class="name" id="createMatrix"><span class="type-signature"></span>createMatrix<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="addNeighbors"><span class="type-signature"></span>addNeighbors<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -800,7 +722,7 @@
 
 
 <div class="description">
-    Función que crea la matriz de nuestro tablero
+    Función que añade los vecinos en la cuadrícula.
 </div>
 
 
@@ -844,7 +766,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="grid.js.html">grid.js</a>, <a href="grid.js.html#line35">line 35</a>
+        <a href="spot.js.html">spot.js</a>, <a href="spot.js.html#line40">line 40</a>
     </li></ul></dd>
     
 
@@ -880,7 +802,7 @@
     
 
     
-    <h4 class="name" id="draw"><span class="type-signature"></span>draw<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="draw"><span class="type-signature"></span>draw<span class="signature">(color)</span><span class="type-signature"></span></h4>
     
 
     
@@ -888,95 +810,7 @@
 
 
 <div class="description">
-    Función que nos representa graficamente el tablero.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="grid.js.html">grid.js</a>, <a href="grid.js.html#line77">line 77</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="genObstacles"><span class="type-signature"></span>genObstacles<span class="signature">(prob)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Función que genera multiples obstáculos dada una probabilidad
+    Función que nos permite colocar obstáculos manualmente clicando con nuestro ratón.
 </div>
 
 
@@ -1012,13 +846,13 @@
 
         <tr>
             
-                <td class="name"><code>prob</code></td>
+                <td class="name"><code>color</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
             
@@ -1028,7 +862,7 @@
 
             
 
-            <td class="description last">Dato de tipo float que representa la probabilidad de obstaculos (rango = [0,1])</td>
+            <td class="description last">Color con el que se pinta el relleno de la sección de rectángulo.</td>
         </tr>
 
     
@@ -1069,7 +903,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="grid.js.html">grid.js</a>, <a href="grid.js.html#line62">line 62</a>
+        <a href="spot.js.html">spot.js</a>, <a href="spot.js.html#line70">line 70</a>
     </li></ul></dd>
     
 
@@ -1105,7 +939,7 @@
     
 
     
-    <h4 class="name" id="updateNeighbors"><span class="type-signature"></span>updateNeighbors<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="toggleObstacle"><span class="type-signature"></span>toggleObstacle<span class="signature">(button)</span><span class="type-signature"></span></h4>
     
 
     
@@ -1113,7 +947,7 @@
 
 
 <div class="description">
-    Función que actualiza los vecinos del tablero.
+    Función que nos permite colocar obstáculos manualmente clicando con nuestro ratón.
 </div>
 
 
@@ -1122,6 +956,55 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>button</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Evento que si clicanmos en el boton izquierdo del ratón coloca el obstáculo.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -1157,7 +1040,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="grid.js.html">grid.js</a>, <a href="grid.js.html#line50">line 50</a>
+        <a href="spot.js.html">spot.js</a>, <a href="spot.js.html#line60">line 60</a>
     </li></ul></dd>
     
 
