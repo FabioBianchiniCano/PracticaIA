@@ -25,6 +25,9 @@ let rows = document.getElementById("filas").value;
 let heuristicFunction = document.getElementById("heuristic");
 let shapeSelected = document.getElementById("shape");
 
+
+document.getElementById("probNumber").innerHTML = document.getElementById("probObstacles").value / 100;
+
 let openSet = [];
 let closedSet = [];
 
@@ -78,7 +81,7 @@ function keyPressed() {
     */
     case 32: { 
       if (status.WORKING) {return}
-      grid.genObstacles(document.getElementById("probObstacles").value);
+      grid.genObstacles(document.getElementById("probObstacles").value  / 100);
       drawFrame();
       return false;
       break;
@@ -154,6 +157,7 @@ function updateParameters() {
   pathColor = document.getElementById("pathColor").value + "";
   heuristicFunction = document.getElementById("heuristic");
   shapeSelected = document.getElementById("shape");
+  document.getElementById("probNumber").innerHTML = document.getElementById("probObstacles").value / 100;
   drawFrame(); 
 }
 
