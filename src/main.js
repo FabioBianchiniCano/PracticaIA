@@ -23,6 +23,8 @@ let path;
 let pathColor = document.getElementById("pathColor").value + "";
 
 
+let timeStart, timeEnd;
+
 let status = {
   PRE_BEGIN: true,
   WORKING: false,
@@ -53,9 +55,6 @@ function mousePressed(event) {
   if (x < 0 || y < 0 || x > cols || y > rows){return;}
   grid.spots[x][y].toggleObstacle(mouseButton);
   grid.draw();
-  if (mouseButton === 'right') {
-    return false;
-  }
 }
 
 
@@ -72,6 +71,9 @@ function keyPressed() {
       status.WORKING = false;
       status.PRE_BEGIN = true;
       status.FINISHED = false;
+      document.getElementById("nNodos").innerHTML = "";
+      document.getElementById("longCamino").innerHTML = "";
+      document.getElementById("tEjec").innerHTML = "";        
       openSet = [];
       closedSet = [];
       grid.createMatrix();
@@ -101,6 +103,9 @@ function keyPressed() {
       grid.end = grid.spots[x][y];    
       drawFrame();
       break;
+    }
+    case 13: {
+      startExecution()
     }
   }
 }
@@ -179,6 +184,13 @@ function drawPath(current) {
     noStroke();
 }
 
+function startExecution() {
+  if (status.WORKING) {return}
+  status.PRE_BEGIN = false;
+  status.WORKING = true;
+  timeStart = performance.now();
+}
+
 function setup() {
   let canvas = createCanvas(wcanvas, hcanvas);
   canvas.style('border: 5px solid black');
@@ -197,7 +209,8 @@ function setup() {
 
 function draw() {
   if (!status.PRE_BEGIN && !status.FINISHED) { // not beginning  until pressing start button
-    //while(!openSet.empty)
+    //while(!openSet.empty) 
+    
     let current;
     if (openSet.length > 0) {
       let nextIter = 0;
@@ -210,6 +223,7 @@ function draw() {
 
       // if we arrived
       if (current === grid.end) {
+        timeEnd = performance.now();
         drawFrame();
         for (let i = 0; i < closedSet.length; i++) {
           closedSet[i].draw(color(255, 0, 0, 60));
@@ -222,6 +236,9 @@ function draw() {
         console.log("LLEGAMOS");
         status.WORKING = false;
         status.FINISHED = true;
+        document.getElementById("nNodos").innerHTML = closedSet.length + 1;
+        document.getElementById("longCamino").innerHTML = path.length;
+        document.getElementById("tEjec").innerHTML = (timeEnd - timeStart).toFixed(3) + "ms";   
         // noLoop();
         return;
       }
