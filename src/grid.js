@@ -1,11 +1,11 @@
 "use strict";
 
 /**
- * @description Clase ajaja
+ * @description Clase que representa una cuadríscula en el canvas.
  */
 class Grid {
   /**
-   * @description Constructor ahi
+   * @description Función que inicializa los parámetros de la clase Grid.
    */
   constructor(cols, rows, color = "black") {
     this.cols = cols;
