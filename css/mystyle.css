@@ -32,9 +32,18 @@ body {
 
 footer {
   /* border-top-right-radius: 10%; */
-  border-radius: 10px;
+  /* border-radius: 10px; */
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+
 }
 
+#legendKeys {
+  margin: 0 auto;
+  width: calc(100% - calc(100% - 800px));
+  text-align: left;
+  margin-bottom: 30px;
+}
 
 
 
@@ -81,3 +90,4 @@ footer {
   background: rgb(243, 184, 50); /* Orange background */
   cursor: pointer; /* Cursor on hover */
 }
+

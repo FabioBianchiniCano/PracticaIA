@@ -38,6 +38,7 @@ class Spot {
    * @description Función que añade los vecinos en la cuadrícula.
    */
   addNeighbors() {
+    this.neighbors = [];
     if (this.x < cols - 1) {
       this.neighbors.push(grid.spots[this.x + 1][this.y]);
     }

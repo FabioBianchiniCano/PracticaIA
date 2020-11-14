@@ -94,12 +94,11 @@ function keyPressed() {
       status.transition('PRE_BEGIN');
       document.getElementById("nNodos").innerHTML = "";
       document.getElementById("longCamino").innerHTML = "";
-      document.getElementById("tEjec").innerHTML = "";        
+      document.getElementById("tEjec").innerHTML = "";
+      document.getElementById("notFoundPath").hidden = true;   
       openSet = [];
       closedSet = [];
-      grid.createMatrix();
-      grid.genObstacles(0);
-      grid.updateNeighbors();
+      grid = new Grid(cols, rows);
       openSet.push(grid.start);
       drawFrame();
       break;
@@ -331,7 +330,7 @@ function algorythmAStar() {
         drawPath(current);
         updateWriteTable();
         status.transition('FINISHED')
-        return grid.end;
+        return current;
       }
 
       /* Borra current de openSet */
@@ -366,9 +365,11 @@ function algorythmAStar() {
         }
       }
     } else {
+      timeHandler.end = performance.now();
+      document.getElementById("notFoundPath").hidden = false;
       updateWriteTable();
       status.transition('FINISHED')
-      return;
+      return grid.start;
     }
     return current;
 }
