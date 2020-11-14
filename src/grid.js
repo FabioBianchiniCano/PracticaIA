@@ -1,6 +1,12 @@
 "use strict";
 
+/**
+ * @description Clase ajaja
+ */
 class Grid {
+  /**
+   * @description Constructor ahi
+   */
   constructor(cols, rows, color = "black") {
     this.cols = cols;
     this.rows = rows;

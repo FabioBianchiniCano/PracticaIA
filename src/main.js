@@ -22,8 +22,15 @@ let closedSet = [];
 let path;
 let pathColor = document.getElementById("pathColor").value + "";
 
-
 let timeStart, timeEnd;
+
+
+
+let tableInfo = {
+  nNodes: 0,
+  pathLength: 0,
+  execTime: 0
+}
 
 let status = {
   PRE_BEGIN: true,
@@ -191,6 +198,13 @@ function startExecution() {
   timeStart = performance.now();
 }
 
+function updateWriteTable() {
+  tableInfo.nNodes = document.getElementById("nNodos").innerHTML = closedSet.length + 1;
+  tableInfo.pathLength = document.getElementById("longCamino").innerHTML = path.length;
+  tableInfo.execTime = document.getElementById("tEjec").innerHTML = (timeEnd - timeStart).toFixed(3) + "ms";   
+}
+
+
 function setup() {
   let canvas = createCanvas(wcanvas, hcanvas);
   canvas.style('border: 5px solid black');
@@ -210,8 +224,13 @@ function setup() {
 function draw() {
   if (!status.PRE_BEGIN && !status.FINISHED) { // not beginning  until pressing start button
     //while(!openSet.empty) 
-    
-    let current;
+    algorythmAStar();
+  }
+}
+
+
+function algorythmAStar() {
+  let current;
     if (openSet.length > 0) {
       let nextIter = 0;
       for (let i = 0; i < openSet.length; i++) {
@@ -234,12 +253,9 @@ function draw() {
         }
         drawPath(current);
         console.log("LLEGAMOS");
+        updateWriteTable();
         status.WORKING = false;
         status.FINISHED = true;
-        document.getElementById("nNodos").innerHTML = closedSet.length + 1;
-        document.getElementById("longCamino").innerHTML = path.length;
-        document.getElementById("tEjec").innerHTML = (timeEnd - timeStart).toFixed(3) + "ms";   
-        // noLoop();
         return;
       }
 
@@ -273,7 +289,9 @@ function draw() {
         }
       }
     } else {
+      timeEnd = performance.now();
       console.log("No se ha encontrado un camino disponible :(");
+      updateWriteTable();
       status.WORKING = false;
       status.FINISHED = true;
       // noLoop();
@@ -300,5 +318,4 @@ function draw() {
 
     drawPath(current);
               
-  }
 }
