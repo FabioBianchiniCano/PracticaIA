@@ -1,6 +1,23 @@
+/**
+ * @fileoverview Fichero spot.js donde se describe los métodos y atributos de la clase Spot
+ * @author Fabio Bianchini Cano
+ * @author Nerea Rodríguez Hernández
+ * @author Cesar Ángel Salgado Navarro
+ * @date 15/11/2020
+ */
+
 'use strict';
 
+/**
+ * @class Spot
+ */
 class Spot {
+
+  /**
+   * @description Constructor parametrizado de la clase
+   * @param {number} x Dato de tipo entero que muestra la posición del eje x en la cuadrícula.
+   * @param {number} y Dato de tipo entero que muestra la posición del eje y en la cuadrícula.
+   */
   constructor(x, y) {
     this.x = x;
     this.y = y;
@@ -17,6 +34,9 @@ class Spot {
     this.isObstacle = false;
   }
 
+  /**
+   * @description Función que añade los vecinos en la cuadrícula.
+   */
   addNeighbors() {
     if (this.x < cols - 1) {
       this.neighbors.push(grid.spots[this.x + 1][this.y]);
@@ -32,13 +52,20 @@ class Spot {
     }
   }
 
+  /**
+   * @description Función que nos permite colocar obstáculos manualmente clicando con nuestro ratón.
+   * @param {string} button Evento que si clicanmos en el boton izquierdo del ratón coloca el obstáculo.
+   */
   toggleObstacle(button) {
     if (button === "left") this.isObstacle = true;
     else if (button === "right") this.isObstacle = false;
-    // this.isObstacle = !this.isObstacle;
     this.addNeighbors();
   }
 
+  /**
+   * @description Función que nos permite colocar obstáculos manualmente clicando con nuestro ratón.
+   * @param {string} color Color con el que se pinta el relleno de la sección de rectángulo.
+   */
   draw(color) {
     let shapeDraw = () => {
       let shape;

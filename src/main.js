@@ -1,16 +1,18 @@
 /**
+* @fileoverview Fichero main.js donde se encuentra el programa principal.
+* @author Fabio Bianchini Cano
+* @author Nerea Rodríguez Hernández
+* @author Cesar Ángel Salgado Navarro
+* @date 15/11/2020
 * @description Universidad de la Laguna - Grado en Ingenería Informática
-* Asignatura: Inteligencia Artificial.
-* Práctica 1: Estrategias de Búsqueda.
-
- * @fileoverview Fichero grid.js donde se describe los métodos y atributos de la clase Grid
- * @author Fabio Bianchini Cano
- * @author Nerea Rodríguez Hernández
- * @author Cesar Ángel Salgado Navarro
- * @date 15/11/2020
- */
+* @description Asignatura: Inteligencia Artificial.
+* @decription Práctica 1: Estrategias de Búsqueda.
+*/
 "use strict";
 
+/**
+ * @description Declaración de las variables globales
+ */
 let grid;
 
 let wcanvas = 800;
@@ -23,16 +25,14 @@ let rows = document.getElementById("filas").value;
 let heuristicFunction = document.getElementById("heuristic");
 let shapeSelected = document.getElementById("shape");
 
-let start, end;
-
 let openSet = [];
 let closedSet = [];
 
 let path = [];
 let pathColor = document.getElementById("pathColor").value + "";
 
-let timeStart, timeEnd;
 
+let timeHandler = new TimeHandler();
 
 let tableInfo = {
   nNodes: 0,
@@ -46,23 +46,23 @@ let status = {
   FINISHED: false
 }
 
-
 let bgcolor;
 
-let prevX = 0, prevY = 0; 
-function mouseDragged(event) {
+/**
+ * @description Función que coloca obstáculos mientras arrastramos el ratón y pulsamos la tecla izquierda.
+*/
+function mouseDragged() {
   if (status.WORKING || status.FINISHED) {return}
   let x = Math.floor(mouseX / (width / cols))
   let y = Math.floor(mouseY / (height / rows))
   if (x < 0 || y < 0 || x > cols || y > rows){return;}
-  if (x != prevX || y != prevY) {
-    grid.spots[x][y].toggleObstacle(mouseButton);
-    grid.draw();
-    prevX = x;
-    prevY = y;
-  }
+  grid.spots[x][y].toggleObstacle(mouseButton);
+  grid.draw();
 }
 
+/**
+ * @description Función que coloca obstáculos mientras pulsamos la tecla izquierda.
+*/
 function mousePressed() {
   if (status.WORKING || status.FINISHED) {return}
   let x = Math.floor(mouseX / (width / cols))
@@ -72,17 +72,26 @@ function mousePressed() {
   grid.draw();
 }
 
-
+/**
+ * @description Función que actua segun la tecla que se pulse.
+*/
 function keyPressed() {
   switch(keyCode) {
-    case 32: { // space - GENERATE OSBTACLES
+    /**
+     * @param space Pulsando la tecla espaciadora generamos obstáculos
+    */
+    case 32: { 
       if (status.WORKING) {return}
       grid.genObstacles(document.getElementById("probObstacles").value);
       drawFrame();
       return false;
       break;
     }
-    case 82: { // r - RESTART
+
+    /**
+     * @param r Pulsando la tecla r reseteamos los parametros del tablero.
+    */
+    case 82: { 
       status.WORKING = false;
       status.PRE_BEGIN = true;
       status.FINISHED = false;
@@ -98,8 +107,11 @@ function keyPressed() {
       drawFrame();
       break;
     }
-    case 83: { // s - put start
-      
+
+    /**
+     * @param s Pulsando la tecla s establecemos manualmente la posición de salida.
+    */
+    case 83: { 
       if (status.WORKING || status.FINISHED) {return}
       let x = Math.floor(mouseX / (width / cols))
       let y = Math.floor(mouseY / (height / rows))
@@ -110,7 +122,11 @@ function keyPressed() {
       drawFrame();
       break;
     }
-    case 69: { // e - put end
+
+    /**
+     * @param e Pulsando la tecla e establecemos manualmene la poscición de meta.
+    */
+    case 69: { 
       if (status.WORKING || status.FINISHED) {return}
       let x = Math.floor(mouseX / (width / cols))
       let y = Math.floor(mouseY / (height / rows))
@@ -119,9 +135,13 @@ function keyPressed() {
       drawFrame();
       break;
     }
+
+    /**
+     * @param enter Pulsando la tecla enter inicializamos la búsqueda del camino óptimo.
+    */
     case 13: {
       startExecution();
-      if (!document.getElementById("isAnimation").checked) {
+      if  (!document.getElementById("isAnimation").checked) {
         while (openSet.length > 0) {
           if (algorythmAStar() === grid.end) {
             break;
@@ -132,6 +152,9 @@ function keyPressed() {
   }
 }
 
+/**
+ * @desciption Función que actualiza los parámetros que diseñan la simulación
+ */
 function updateParameters() {
   if (status.WORKING) {return}
   pathColor = document.getElementById("pathColor").value + "";
@@ -140,6 +163,9 @@ function updateParameters() {
   drawFrame(); 
 }
 
+/**
+ * @desciption Función que genera un nuevo tablero con los parámetros actualizados.
+ */
 function createNewGrid() {
   if (status.WORKING) {return}
   cols = document.getElementById("columnas").value;
@@ -152,11 +178,17 @@ function createNewGrid() {
   drawFrame();
 }
 
+/**
+ * @description Función que representa visualmente nuestro tablero.
+ */
 function drawFrame() {
   clear();
   grid.draw();
 }
 
+/**
+ * @description Función que 
+ */
 function heuristic(current, end) {
   let selectedHeur;
   for (let i = 0; i < heuristicFunction.options.length; i++) {
@@ -170,9 +202,8 @@ function heuristic(current, end) {
       distance = abs(current.x - end.x) + abs(current.y - end.y); //manhattan
       break;
     } 
-
-    case "hypotenuse": {
-      distance = dist(current.x, current.y, end.x, end.y); //linea recta
+    case "euclidean": {
+      distance = dist(current.x, current.y, end.x, end.y); //euclídea
       // distance = sqrt( pow(end.x - current.x, 2) + pow(end.y - current.y, 2) );
       break;
     }
@@ -212,13 +243,13 @@ function startExecution() {
   if (status.WORKING) {return}
   status.PRE_BEGIN = false;
   status.WORKING = true;
-  timeStart = performance.now();
+  timeHandler.start = performance.now();
 }
 
 function updateWriteTable() {
   tableInfo.nNodes = document.getElementById("nNodos").innerHTML = closedSet.length + 1;
   tableInfo.pathLength = document.getElementById("longCamino").innerHTML = path.length;
-  tableInfo.execTime = document.getElementById("tEjec").innerHTML = (timeEnd - timeStart).toFixed(3) + "ms";   
+  tableInfo.execTime = document.getElementById("tEjec").innerHTML = timeHandler.time().toFixed(3) + "ms";   
 }
 
 
@@ -240,9 +271,23 @@ function setup() {
 function draw() {
   if (!status.PRE_BEGIN && !status.FINISHED) { // not beginning  until pressing start button
     //while(!openSet.empty) 
-    algorythmAStar();
+    let current = algorythmAStar();
+    drawFrame()
+    clear();
+    grid.draw();
+    
+    for (let i = 0; i < closedSet.length; i++) {
+      closedSet[i].draw(color(255, 0, 0, 60));
+    }
+    
+    for (let i = 0; i < openSet.length; i++) {
+      openSet[i].draw(color(0, 255, 0, 150));
+    }
+    
+    grid.start.draw('white');
+    grid.end.draw('pink');
+    drawPath(current);
   }
-  loop();
 }
 
 function algorythmAStar() {
@@ -258,12 +303,11 @@ function algorythmAStar() {
 
       // if we arrived
       if (current === grid.end) {
-        timeEnd = performance.now();
+        timeHandler.end = performance.now();
         drawFrame();
         for (let i = 0; i < closedSet.length; i++) {
           closedSet[i].draw(color(255, 0, 0, 60));
         }
-    
         for (let i = 0; i < openSet.length; i++) {
           openSet[i].draw(color(0, 255, 0, 150));
         }
@@ -312,24 +356,8 @@ function algorythmAStar() {
       // noLoop();
       return;
     }
-    drawFrame()
-    clear();
-    for (let i = 0; i < cols; i++) {
-      for (let j = 0; j < rows; j++) {
-        grid.spots[i][j].draw();
-      }
-    }
+    
+    
 
-    for (let i = 0; i < closedSet.length; i++) {
-      closedSet[i].draw(color(255, 0, 0, 60));
-    }
-
-    for (let i = 0; i < openSet.length; i++) {
-      openSet[i].draw(color(0, 255, 0, 150));
-    }
-
-    grid.start.draw('white');
-    grid.end.draw('pink');
-
-    drawPath(current);
+    return current;
 }
