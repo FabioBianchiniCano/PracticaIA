@@ -1,11 +1,23 @@
+/**
+ * @fileoverview Fichero grid.js donde se describe los métodos y atributos de la clase Grid
+ * @author Fabio Bianchini Cano
+ * @author Nerea Rodríguez Hernández
+ * @author Cesar Ángel Salgado Navarro
+ * @date 15/11/2020
+ */
+
 "use strict";
 
 /**
- * @description Clase que representa una cuadríscula en el canvas.
+ * @class Grid
  */
 class Grid {
+
   /**
-   * @description Función que inicializa los parámetros de la clase Grid.
+   * @description Constructor parametrizado de la clase
+   * @param {number} cols Dato de tipo entero que enumera la cantidad de columnas.
+   * @param {number} rows Dato de tipo entero que enumera la cantidad de filas.
+   * @param {string} color Color con el que se pintan las líneas de la cuadrícula.
    */
   constructor(cols, rows, color = "black") {
     this.cols = cols;
@@ -17,6 +29,9 @@ class Grid {
     this.createMatrix();
   }
 
+  /**
+   * @description Función que crea la matriz de nuestro tablero
+   */
   createMatrix() {
     this.spots = new Array(cols);
     for (let i = 0; i < cols; i++) {
@@ -29,18 +44,9 @@ class Grid {
     this.end = this.spots[cols - 1][rows - 1];
   }
 
-  createMatrix() {
-    this.spots = new Array(cols);
-    for (let i = 0; i < cols; i++) {
-      this.spots[i] = new Array(rows);
-      for (let j = 0; j < rows; j++) {
-        this.spots[i][j] = new Spot(i, j);
-      }
-    }
-    this.start = this.spots[0][0];
-    this.end = this.spots[cols - 1][rows - 1];
-  }
-
+  /**
+   * @description Función que actualiza los vecinos del tablero.
+   */
   updateNeighbors() {
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
@@ -49,6 +55,10 @@ class Grid {
     }
   }
 
+  /**
+   * @description Función que genera multiples obstáculos dada una probabilidad
+   * @param {number} prob Dato de tipo float que representa la probabilidad de obstaculos (rango = [0,1])
+   */
   genObstacles(prob) {
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
@@ -61,6 +71,9 @@ class Grid {
 
   }
 
+  /**
+   * @description Función que nos representa graficamente el tablero.
+   */
   draw() {
     clear()
     for (let i = 0; i < this.cols; i++)

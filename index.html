@@ -32,7 +32,7 @@
       <label for="filas" for>Filas:
         <input type="number" id="filas" value="20" min="1" max="100" onchange="createNewGrid()">
       </label>
-      <label for="columas" for>Columas:
+      <label for="columnas" for>Columas:
         <input type="number" id="columnas" value="20" min="1" max="100" onchange="createNewGrid()">
       </label>
       <br>
@@ -40,6 +40,8 @@
         <!-- <input type="range" -->
         <input type="number" id="probObstacles" value="0.2" min="0" max="1" step="0.1" onchange="updateParameters()">
       </label>
+      <br>
+      <label><input type="checkbox" id="isAnimation"> Animación</label>
     </div>
 
     <table id="tabla">

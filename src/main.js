@@ -1,3 +1,14 @@
+/**
+* @description Universidad de la Laguna - Grado en Ingenería Informática
+* Asignatura: Inteligencia Artificial.
+* Práctica 1: Estrategias de Búsqueda.
+
+ * @fileoverview Fichero grid.js donde se describe los métodos y atributos de la clase Grid
+ * @author Fabio Bianchini Cano
+ * @author Nerea Rodríguez Hernández
+ * @author Cesar Ángel Salgado Navarro
+ * @date 15/11/2020
+ */
 "use strict";
 
 let grid;
@@ -5,8 +16,6 @@ let grid;
 let wcanvas = 800;
 let hcanvas = 600;
 let density = 20;
-// let cols = Math.floor(wcanvas / density),
-//   rows = Math.floor(hcanvas / density);
 
 let cols = document.getElementById("columnas").value;
 let rows = document.getElementById("filas").value;
@@ -19,11 +28,10 @@ let start, end;
 let openSet = [];
 let closedSet = [];
 
-let path;
+let path = [];
 let pathColor = document.getElementById("pathColor").value + "";
 
 let timeStart, timeEnd;
-
 
 
 let tableInfo = {
@@ -55,7 +63,7 @@ function mouseDragged(event) {
   }
 }
 
-function mousePressed(event) {
+function mousePressed() {
   if (status.WORKING || status.FINISHED) {return}
   let x = Math.floor(mouseX / (width / cols))
   let y = Math.floor(mouseY / (height / rows))
@@ -112,7 +120,14 @@ function keyPressed() {
       break;
     }
     case 13: {
-      startExecution()
+      startExecution();
+      if (!document.getElementById("isAnimation").checked) {
+        while (openSet.length > 0) {
+          if (algorythmAStar() === grid.end) {
+            break;
+          }
+        }
+      }
     }
   }
 }
@@ -155,8 +170,10 @@ function heuristic(current, end) {
       distance = abs(current.x - end.x) + abs(current.y - end.y); //manhattan
       break;
     } 
+
     case "hypotenuse": {
-      distance = dist(current.i, current.j, end.i, end.j); //linea recta
+      distance = dist(current.x, current.y, end.x, end.y); //linea recta
+      // distance = sqrt( pow(end.x - current.x, 2) + pow(end.y - current.y, 2) );
       break;
     }
     default: {
@@ -169,26 +186,26 @@ function heuristic(current, end) {
 
 function drawPath(current) {
   path = [];
-    let currentForPath = current;
-    path.push(currentForPath);
-    while (currentForPath.father) {
-      path.push(currentForPath.father);
-      currentForPath = currentForPath.father;
-    }
+  let currentForPath = current;
+  path.push(currentForPath);
+  while (currentForPath.father) {
+    path.push(currentForPath.father);
+    currentForPath = currentForPath.father;
+  }
 
-    noFill();
-    stroke(pathColor);
-    strokeWeight((grid.spots[0][0].height + grid.spots[0][0].width)* 0.15);
-    beginShape();
-    for (let i = 0; i < path.length; i++) {
-      // path[i].draw(color(0, 0, 255, path[i].x * 255 / 50))
-      vertex(
-        path[i].x * path[i].width + path[i].width / 2,
-        path[i].y * path[i].height + path[i].height / 2
-      );
-    }
-    endShape();
-    noStroke();
+  noFill();
+  stroke(pathColor);
+  strokeWeight((grid.spots[0][0].height + grid.spots[0][0].width)* 0.15);
+  beginShape();
+  for (let i = 0; i < path.length; i++) {
+    // path[i].draw(color(0, 0, 255, path[i].x * 255 / 50))
+    vertex(
+      path[i].x * path[i].width + path[i].width / 2,
+      path[i].y * path[i].height + path[i].height / 2
+    );
+  }
+  endShape();
+  noStroke();
 }
 
 function startExecution() {
@@ -217,7 +234,6 @@ function setup() {
   drawFrame();
   
   grid.updateNeighbors();
-
   openSet.push(grid.start);
 }
 
@@ -226,8 +242,8 @@ function draw() {
     //while(!openSet.empty) 
     algorythmAStar();
   }
+  loop();
 }
-
 
 function algorythmAStar() {
   let current;
@@ -256,7 +272,7 @@ function algorythmAStar() {
         updateWriteTable();
         status.WORKING = false;
         status.FINISHED = true;
-        return;
+        return grid.end;
       }
 
       // remove current from openSet
@@ -289,7 +305,6 @@ function algorythmAStar() {
         }
       }
     } else {
-      timeEnd = performance.now();
       console.log("No se ha encontrado un camino disponible :(");
       updateWriteTable();
       status.WORKING = false;
@@ -317,5 +332,4 @@ function algorythmAStar() {
     grid.end.draw('pink');
 
     drawPath(current);
-              
 }
