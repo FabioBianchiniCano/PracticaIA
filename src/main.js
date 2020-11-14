@@ -187,7 +187,9 @@ function drawFrame() {
 }
 
 /**
- * @description Función que 
+ * @description Función que elige la función heurística a seguir.
+ * @param {spot} current Objeto tipo spot que representa la posición X
+ * @param {spot} end Objeto tipo spot que representa la posición Y
  */
 function heuristic(current, end) {
   let selectedHeur;
@@ -199,22 +201,25 @@ function heuristic(current, end) {
   let distance;
   switch(selectedHeur) {
     case "manhattan": {
-      distance = abs(current.x - end.x) + abs(current.y - end.y); //manhattan
+      distance = abs(current.x - end.x) + abs(current.y - end.y); 
       break;
     } 
     case "euclidean": {
-      distance = dist(current.x, current.y, end.x, end.y); //euclídea
-      // distance = sqrt( pow(end.x - current.x, 2) + pow(end.y - current.y, 2) );
+      distance = dist(current.x, current.y, end.x, end.y);
       break;
     }
     default: {
-      distance = abs(current.x - end.x) + abs(current.y - end.y); //manhattan
+      distance = abs(current.x - end.x) + abs(current.y - end.y); 
       break;
     }
   }
   return distance;
 }
 
+/**
+ * @description Función que dibuja el camino que recorre el algoritmo.
+ * @param {spot} current Objeto tipo spot
+ */
 function drawPath(current) {
   path = [];
   let currentForPath = current;
@@ -223,13 +228,11 @@ function drawPath(current) {
     path.push(currentForPath.father);
     currentForPath = currentForPath.father;
   }
-
   noFill();
   stroke(pathColor);
   strokeWeight((grid.spots[0][0].height + grid.spots[0][0].width)* 0.15);
   beginShape();
   for (let i = 0; i < path.length; i++) {
-    // path[i].draw(color(0, 0, 255, path[i].x * 255 / 50))
     vertex(
       path[i].x * path[i].width + path[i].width / 2,
       path[i].y * path[i].height + path[i].height / 2
@@ -239,6 +242,9 @@ function drawPath(current) {
   noStroke();
 }
 
+/**
+ * @description Función que inicializa la ejecución de la búsqueda.
+ */
 function startExecution() {
   if (status.WORKING) {return}
   status.PRE_BEGIN = false;
@@ -246,13 +252,18 @@ function startExecution() {
   timeHandler.start = performance.now();
 }
 
+/**
+ * @description Función que actualiza los datos de la tabla de información.
+ */
 function updateWriteTable() {
   tableInfo.nNodes = document.getElementById("nNodos").innerHTML = closedSet.length + 1;
   tableInfo.pathLength = document.getElementById("longCamino").innerHTML = path.length;
   tableInfo.execTime = document.getElementById("tEjec").innerHTML = timeHandler.time().toFixed(3) + "ms";   
 }
 
-
+/**
+ * @description Función que prepara los parámetros que van a ser utilizados en la creación del tablero.
+ */
 function setup() {
   let canvas = createCanvas(wcanvas, hcanvas);
   canvas.style('border: 5px solid black');
@@ -268,6 +279,9 @@ function setup() {
   openSet.push(grid.start);
 }
 
+/**
+ * @description Función que llama a todos los métodos que representan visualmente el algoritmo.
+ */
 function draw() {
   if (!status.PRE_BEGIN && !status.FINISHED) { // not beginning  until pressing start button
     //while(!openSet.empty) 
@@ -290,6 +304,9 @@ function draw() {
   }
 }
 
+/**
+ * @description Función que
+ */
 function algorythmAStar() {
   let current;
     if (openSet.length > 0) {
