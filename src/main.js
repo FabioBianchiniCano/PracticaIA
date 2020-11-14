@@ -99,6 +99,7 @@ function keyPressed() {
       openSet = [];
       closedSet = [];
       grid = new Grid(cols, rows);
+      grid.updateNeighbors();
       openSet.push(grid.start);
       drawFrame();
       break;
