@@ -27,20 +27,19 @@
 html
 {
     overflow: auto;
-    background-color: #fff;
+    background-color: rgba(248, 152, 63, 0.459);
     font-size: 14px;
 }
 
-body
-{
+body {
     font-family: 'Open Sans', sans-serif;
     line-height: 1.5;
-    color: #4d4e53;
-    background-color: white;
+    color: #383b3b;
+    background-color:  rgba(247, 247, 247, 0.1);
 }
 
 a, a:visited, a:active {
-    color: #0095dd;
+    color: #377492;
     text-decoration: none;
 }
 
@@ -48,8 +47,7 @@ a:hover {
     text-decoration: underline;
 }
 
-header
-{
+header {
     display: block;
     padding: 0px 4px;
 }
@@ -59,7 +57,7 @@ tt, code, kbd, samp {
 }
 
 .class-description {
-    font-size: 130%;
+    font-size: 150%;
     line-height: 140%;
     margin-bottom: 1em;
     margin-top: 1em;
@@ -82,10 +80,9 @@ article img {
   max-width: 100%;
 }
 
-section
-{
+section {
     display: block;
-    background-color: #fff;
+    background-color: rgba(247, 247, 247, 0.3);;
     padding: 12px 24px;
     border-bottom: 1px solid #ccc;
     margin-right: 30px;
@@ -109,7 +106,7 @@ nav
     margin-top: 28px;
     width: 30%;
     box-sizing: border-box;
-    border-left: 1px solid #ccc;
+    border-left: 1px solid #377492;;
     padding-left: 16px;
 }
 
@@ -125,7 +122,7 @@ nav ul {
 nav ul a, nav ul a:visited, nav ul a:active {
     font-family: Consolas, Monaco, 'Andale Mono', monospace;
     line-height: 18px;
-    color: #4D4E53;
+    color: #686565;
 }
 
 nav h3 {
@@ -205,7 +202,7 @@ table
 
 td, th
 {
-    border: 1px solid #ddd;
+    border: 1px solid rgba(248, 153, 63, 0.7);
     margin: 0px;
     text-align: left;
     vertical-align: top;
@@ -215,12 +212,12 @@ td, th
 
 thead tr
 {
-    background-color: #ddd;
+    background-color: rgba(248, 153, 63, 0.7);;
     font-weight: bold;
 }
 
-th { border-right: 1px solid #aaa; }
-tr > th:last-child { border-right: 1px solid #ddd; }
+th { border-right: 1px solid rgba(248, 153, 63, 0.7); }
+tr > th:last-child { border-right: 1px solid rgba(248, 153, 63, 0.7); }
 
 .ancestors, .attribs { color: #999; }
 .ancestors a, .attribs a

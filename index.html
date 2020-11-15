@@ -9,15 +9,19 @@
   <head>
     <link rel="stylesheet" type="text/css" href="./css/mystyle.css">
     <script src="p5/p5.min.js" defer async></script>
-    <script src="src/status.js" defer async></script> 
-    <script src="src/timehandler.js" defer async></script> 
+    <script src="src/status.js" defer></script> 
+    <script src="src/timehandler.js" defer></script> 
     <script src="src/spot.js" defer async></script> 
     <script src="src/grid.js" defer async></script>    
     <script src="src/main.js" defer async></script>
   </head>
-  <body style="background-image: url('./img/background-web.jpg'); background-repeat: round;" >
-    <h1 style="text-align: center; color: black;">Práctica 1 - Inteligencia Artificial</h1>
-    
+  <body style="background-image: url('./img/background-web.jpg'); background-repeat: round;" oncontextmenu="return false;">
+    <div id="Title">
+      <h1 style="text-align: center; color: black;">Práctica 1 - Inteligencia Artificial</h1>
+    </div>
+    <div id="documentation">
+      <a href="doc/index.html">Acceder a la documentación</a>
+    </div>
     <div id="divParameters">
       <label for="pathColor" for>Color del camino</label>
       <input name="pathColor" type="color" id="pathColor" value="#f3b832" onchange="updateParameters()">
@@ -51,9 +55,8 @@
       <br>
       <label><input type="checkbox" id="isAnimation"> Animación</label>
     </div>
-
     <table id="tabla">
-      <caption>Datos posteriores a la ejecución</caption>
+      <caption style="padding-left: 52px">Datos posteriores a la ejecución</caption>
       <tr>     
         <th>Número de nodos visitados</th>    
         <th>Longitud del camino mínimo</th>    
@@ -69,7 +72,6 @@
       No se encontró un camino disponible :(
     </div>
     <div id="divCanvas" style="text-align: center; margin-top: 5%;"></div>
-
     <div id="legendKeys">
       <div>{ enter } - Comienzo del programa</div>
       <div>{ space } - Generar obstáculos aleatorios con la probabilidad introducida por el slider.</div>
@@ -77,13 +79,10 @@
       <div>{ s } - Posicionar donde está el ratón la salida (start).</div>
       <div>{ e } - Posicionar donde está el ratón la meta (end).</div>
     </div>
-
-    <footer style="text-align: end; background-color: rgba(165, 119, 33, 0.664); padding: 10px 30px 10px;">
+    <footer>
       <p>Fabio Bianchini Cano</p>
       <p>Nerea Rodríguez Hernández</p>
       <p>César Ángel Salgado Navarro</p>
     </footer>
-    
-    
   </body>
 </html>

@@ -11,31 +11,62 @@ body {
   text-align: center;
 }
 
+#title {
+  font-weight: bolder;
+  font-size: 20;
+  text-shadow: 2px 2px 2px rgb(214, 203, 224);
+  margin: 1 auto;
+}
+
+#documentation {
+  font-weight: bolder;
+  font-size: 20;
+  text-shadow: 1px 1px 1px rgba(160, 9, 206, 0.342);
+  margin: 0 auto;
+  width: 10%;
+  position: absolute;
+  margin-top: -100px;
+  opacity: 0.4;
+  transition: opacity .2s;
+}
+
+#documentation a:visited {
+  color: rgba(165, 119, 33, 0.664);
+  background-color: transparent;
+  text-decoration: none;
+}
+
+#documentation:hover {
+  opacity: 1;
+}
+
 #divParameters {
+  margin: 10px;
+  padding: 10px;
   font-size: 18;
   margin: 0 auto;
   width: 50%;
   color: white;
-  border: black dashed 5px;
+  border: black dashed 4px;
   background-color: rgba(65, 39, 11, 0.541);
 }
 
 #tabla {
   border-collapse: separate;
-  border-spacing: 50px 0;
-  font-size: 18;
+  border-spacing: 40px 0;
+  font-size: 20;
   margin: 0 auto;
-  margin-top: 50px;
+  margin-top: 20px;
   text-align: center;
 }
 
 
 footer {
-  /* border-top-right-radius: 10%; */
-  /* border-radius: 10px; */
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-
+  text-align: end; background-color:
+  rgba(165, 119, 33, 0.664);
+  padding: 10px 30px 10px;
 }
 
 #legendKeys {
