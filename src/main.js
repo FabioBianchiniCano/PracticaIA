@@ -202,7 +202,9 @@ function heuristic(current, end) {
       distance = abs(current.x - end.x) + abs(current.y - end.y); 
       break;
     } 
+    
     case "euclidean": {
+      // √((y2 − y1)² + (x2 - x1)²)
       distance = dist(current.x, current.y, end.x, end.y);
       break;
     }
